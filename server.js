@@ -1,20 +1,17 @@
-import cors from 'cors';
-import dotenv from 'dotenv';
-import morgan from 'morgan';
-import colors from 'colors';
-import helmet from 'helmet';
-import express from 'express';
-
-import connectDatabase from './db';
-
-// Import routes
-import auth from './routes/auth';
+const cors = require('cors');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
+const colors = require('colors');
+const helmet = require('helmet');
+const express = require('express');
 
 // Load environment variables
 dotenv.config();
 
+const { connectToDatabase } = require('./db');
+
 // Init database
-connectDatabase();
+connectToDatabase();
 
 // Init app
 const app = express();
@@ -33,6 +30,9 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// const routes
+const auth = require('./routes/auth');
+
 // Assign routes
 app.use('/api/v1/auth', auth);
 
@@ -44,7 +44,7 @@ app.use('*', (req, res) => {
   });
 });
 
-const PORT: number = parseInt(process.env.PORT as string, 10) || 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(colors.bgYellow.black(`Listening on port ${PORT}`));

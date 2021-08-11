@@ -1,6 +1,11 @@
-import { Router } from 'express';
+const { Router } = require('express');
 
-import { login, logout, register, getCurrentUser } from '../controllers/auth';
+const {
+  login,
+  logout,
+  register,
+  getCurrentUser,
+} = require('../controllers/auth');
 
 const router = Router();
 
@@ -12,4 +17,4 @@ router.post('/register', register);
 
 router.get('/current-user', getCurrentUser);
 
-export default router;
+module.exports = Router;

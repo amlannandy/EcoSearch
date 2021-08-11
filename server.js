@@ -9,6 +9,7 @@ const express = require('express');
 dotenv.config();
 
 const { connectToDatabase } = require('./db');
+const errorHandler = require('./middleware/errorHandler');
 
 // Init database
 connectToDatabase();
@@ -35,6 +36,9 @@ const auth = require('./routes/auth');
 
 // Assign routes
 app.use('/api/v1/auth', auth);
+
+//Error handling middleware
+app.use(errorHandler);
 
 // Handle 404 cases
 app.use('*', (req, res) => {

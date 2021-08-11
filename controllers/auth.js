@@ -1,9 +1,10 @@
 const User = require('../models/User');
+const asyncHandler = require('../middleware/asyncHandler');
 
 // @description   Login user
 // @route         POST /api/v1/auth/login
 // @access        Public
-exports.login = async (req, res) => {
+exports.login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email } });
   if (!user) {
@@ -24,12 +25,12 @@ exports.login = async (req, res) => {
     success: true,
     data: token,
   });
-};
+});
 
 // @description   Register user
 // @route         POST /api/v1/auth/register
 // @access        Public
-exports.register = async (req, res) => {
+exports.register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   const existingUser = await User.findOne({ where: { email } });
   if (existingUser) {
@@ -44,22 +45,22 @@ exports.register = async (req, res) => {
     success: true,
     data: token,
   });
-};
+});
 
 // @description   Get logged in user
 // @route         POST /api/v1/auth/current-user
 // @access        Private
-exports.getCurrentUser = async (req, res) => {
+exports.getCurrentUser = asyncHandler(async (req, res) => {
   const user = req.user;
   res.status(200).json({
     success: true,
     data: user,
   });
-};
+});
 
-exports.logout = async (req, res) => {
+exports.logout = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     msg: 'Logout route',
   });
-};
+});

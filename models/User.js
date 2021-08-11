@@ -48,6 +48,10 @@ const User = sequelize.define(
   }
 );
 
+User.prototype.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 User.sync().then(() => console.log('User table created'.bgBlue.white));
 
 module.exports = User;

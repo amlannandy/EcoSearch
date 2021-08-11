@@ -1,0 +1,35 @@
+{
+  "name": "florasearch",
+  "version": "1.0.0",
+  "description": "API for a Flower Classification Platform",
+  "main": "index.js",
+  "scripts": {
+    "server": "ts-node-dev --respawn --pretty --transpile-only index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amlannandy/FloraSearch.git"
+  },
+  "author": "Amlan Kumar Nandy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amlannandy/FloraSearch/issues"
+  },
+  "homepage": "https://github.com/amlannandy/FloraSearch#readme",
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "morgan": "^1.10.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0"
+  }
+}

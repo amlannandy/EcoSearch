@@ -1,41 +1,53 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { Sequelize } = require('sequelize');
 
 const { sequelize } = require('../db');
 
-const User = sequelize.define('user', {
-  name: {
-    type: Sequelize.STRING,
-  },
-  username: {
-    type: Sequelize.STRING,
-    unique: true,
-  },
-  email: {
-    type: Sequelize.STRING,
-    unique: true,
-    validate: {
-      isEmail: true,
+const User = sequelize.define(
+  'user',
+  {
+    name: {
+      type: Sequelize.STRING,
+    },
+    email: {
+      type: Sequelize.STRING,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+    },
+    password: {
+      type: Sequelize.STRING,
+      validate: {
+        isAlphanumeric: true,
+      },
+      allowNull: false,
+      defaultValue: Sequelize.NOW,
+    },
+    createdAt: {
+      type: Sequelize.DATEONLY,
+      defaultValue: Sequelize.NOW,
     },
   },
-  password: {
-    type: Sequelize.STRING,
-    validate: {
-      isAlphanumeric: true,
+  {
+    getterMethods: {
+      authToken() {
+        return jwt.sign({ id: this.email }, process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRE,
+        });
+      },
     },
-    allowNull: false,
-    defaultValue: Sequelize.NOW,
-  },
-  createdAt: {
-    type: Sequelize.DATEONLY,
-    defaultValue: Sequelize.NOW,
-  },
-});
+    hooks: {
+      beforeCreate: async (user, options) => {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(user.password, salt);
+        user.password = hashedPassword;
+      },
+    },
+  }
+);
 
-// Hash password before register
-User.beforeCreate(async (user, options) => {
-  const hashedPassword = user.password;
-});
-
-User.sync().then(() => console.log('User table created'.bgGreen.white));
+User.sync().then(() => console.log('User table created'.bgBlue.white));
 
 module.exports = User;

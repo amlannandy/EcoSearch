@@ -7,6 +7,7 @@ const {
   getCurrentUser,
 } = require('../controllers/auth');
 const { validateLogin, validateRegister } = require('../validators/auth');
+const authHandler = require('../middleware/authHandler');
 
 const router = Router();
 
@@ -16,6 +17,6 @@ router.post('/logout', logout);
 
 router.post('/register', validateRegister, register);
 
-router.get('/current-user', getCurrentUser);
+router.get('/current-user', authHandler, getCurrentUser);
 
 module.exports = router;

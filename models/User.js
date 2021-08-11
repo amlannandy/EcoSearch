@@ -45,6 +45,9 @@ const User = sequelize.define(
         user.password = hashedPassword;
       },
     },
+    defaultScope: {
+      attributes: { exclude: ['password'] },
+    },
   }
 );
 

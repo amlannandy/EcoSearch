@@ -1,5 +1,8 @@
 const User = require('../models/User');
 
+// @description   Login user
+// @route         POST /api/v1/auth/login
+// @access        Public
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email } });
@@ -43,10 +46,14 @@ exports.register = async (req, res) => {
   });
 };
 
+// @description   Get logged in user
+// @route         POST /api/v1/auth/current-user
+// @access        Private
 exports.getCurrentUser = async (req, res) => {
+  const user = req.user;
   res.status(200).json({
     success: true,
-    msg: 'Get current user route',
+    data: user,
   });
 };
 

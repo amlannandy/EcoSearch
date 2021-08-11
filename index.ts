@@ -5,11 +5,16 @@ import colors from 'colors';
 import helmet from 'helmet';
 import express from 'express';
 
+import connectDatabase from './db';
+
 // Import routes
 import auth from './routes/auth';
 
 // Load environment variables
 dotenv.config();
+
+// Init database
+connectDatabase();
 
 // Init app
 const app = express();

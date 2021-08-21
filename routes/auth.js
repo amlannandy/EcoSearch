@@ -7,12 +7,14 @@ const {
   getCurrentUser,
   updatePassword,
   deleteAccount,
+  forgotPassword,
 } = require('../controllers/auth');
 const {
   validateLogin,
   validateRegister,
   validateUpdatePassword,
   validateDeleteAccount,
+  validateForgotPassword,
 } = require('../validators/auth');
 const authHandler = require('../middleware/authHandler');
 
@@ -37,5 +39,7 @@ router.put(
   [authHandler, validateDeleteAccount],
   deleteAccount
 );
+
+router.put('/forgot-password', [validateForgotPassword], forgotPassword);
 
 module.exports = router;

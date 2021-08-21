@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { sendPasswordResetmail } = require('../utils/sendMail');
 const asyncHandler = require('../middleware/asyncHandler');
 
 // @description   Login user
@@ -117,5 +118,26 @@ exports.deleteAccount = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     msg: 'Account deleted',
+  });
+});
+
+// @description   Forgot password
+// @route         PUT /api/v1/auth/forgot-password
+// @access        Private
+exports.forgotPassword = asyncHandler(async (req, res) => {
+  const email = req.body.email;
+  const user = await User.findOne({ where: { email } });
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      errors: ['Account with this email does not exist'],
+    });
+  }
+
+  const token = user.authToken;
+  await sendPasswordResetmail(email, token);
+  res.status(200).json({
+    success: true,
+    msg: 'Reset mail sent. Please check your emails',
   });
 });

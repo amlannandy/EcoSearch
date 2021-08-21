@@ -9,8 +9,4 @@ const RevokedToken = sequelize.define('revoked_token', {
   },
 });
 
-RevokedToken.sync().then(() =>
-  console.log('RevokedToken table created'.bgBlue.white)
-);
-
 module.exports = RevokedToken;

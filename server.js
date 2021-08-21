@@ -9,10 +9,14 @@ const express = require('express');
 dotenv.config();
 
 const { connectToDatabase } = require('./db');
+const { createTables } = require('./models/index');
 const errorHandler = require('./middleware/errorHandler');
 
 // Init database
 connectToDatabase();
+
+// Create db tables and relationships
+createTables();
 
 // Init app
 const app = express();

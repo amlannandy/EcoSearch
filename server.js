@@ -33,9 +33,11 @@ if (process.env.NODE_ENV === 'development') {
 
 // const routes
 const auth = require('./routes/auth');
+const records = require('./routes/records');
 
 // Assign routes
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/records', records);
 
 //Error handling middleware
 app.use(errorHandler);

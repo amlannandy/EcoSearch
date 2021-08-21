@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
+const RevokedToken = require('../models/RevokedToken');
 const { sendPasswordResetmail } = require('../utils/sendMail');
 const asyncHandler = require('../middleware/asyncHandler');
 
@@ -65,9 +66,11 @@ exports.getCurrentUser = asyncHandler(async (req, res) => {
 });
 
 exports.logout = asyncHandler(async (req, res) => {
+  const token = req.headers.authorization.split(' ')[1];
+  await RevokedToken.create({ token });
   res.status(200).json({
     success: true,
-    msg: 'Logout route',
+    msg: 'Logged out',
   });
 });
 

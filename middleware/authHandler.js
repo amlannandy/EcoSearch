@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
+const RevokedToken = require('../models/RevokedToken');
 
 const authHandler = async (req, res, next) => {
   let token;
@@ -29,6 +30,16 @@ const authHandler = async (req, res, next) => {
         errors: ['You need to be authenticated to use this route'],
       });
     }
+
+    // Check if token is revoked
+    const revokedToken = await RevokedToken.findOne({ where: { token } });
+    if (revokedToken) {
+      return res.status(401).json({
+        success: false,
+        errors: ['Invalid token'],
+      });
+    }
+
     req.user = user;
     next();
   } catch (error) {

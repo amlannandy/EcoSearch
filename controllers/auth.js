@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/User');
 const { sendPasswordResetmail } = require('../utils/sendMail');
 const asyncHandler = require('../middleware/asyncHandler');
@@ -123,7 +125,7 @@ exports.deleteAccount = asyncHandler(async (req, res) => {
 
 // @description   Forgot password
 // @route         PUT /api/v1/auth/forgot-password
-// @access        Private
+// @access        Public
 exports.forgotPassword = asyncHandler(async (req, res) => {
   const email = req.body.email;
   const user = await User.findOne({ where: { email } });
@@ -139,5 +141,29 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     msg: 'Reset mail sent. Please check your emails',
+  });
+});
+
+// @description   Reset password
+// @route         PUT /api/v1/auth/reset-password
+// @access        Public
+exports.resetPassword = asyncHandler(async (req, res) => {
+  const token = req.params.token;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const email = decoded.id;
+
+  const user = await User.findOne({ where: { email } });
+  if (!user) {
+    return res.status(401).json({
+      success: false,
+      errors: ['User with this email does not exists'],
+    });
+  }
+
+  const password = req.body.password;
+  await user.update({ password });
+  res.status(200).json({
+    success: true,
+    msg: 'Password reset',
   });
 });

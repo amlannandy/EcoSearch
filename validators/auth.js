@@ -75,6 +75,15 @@ exports.validateForgotPassword = [
   (req, res, next) => sendErrorResponse(req, res, next),
 ];
 
+exports.validateResetPassword = [
+  check('password')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('Please provide a password'),
+  (req, res, next) => sendErrorResponse(req, res, next),
+];
+
 const sendErrorResponse = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

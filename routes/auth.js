@@ -5,8 +5,13 @@ const {
   logout,
   register,
   getCurrentUser,
+  updatePassword,
 } = require('../controllers/auth');
-const { validateLogin, validateRegister } = require('../validators/auth');
+const {
+  validateLogin,
+  validateRegister,
+  validateUpdatePassword,
+} = require('../validators/auth');
 const authHandler = require('../middleware/authHandler');
 
 const router = Router();
@@ -18,5 +23,11 @@ router.post('/logout', logout);
 router.post('/register', validateRegister, register);
 
 router.get('/current-user', authHandler, getCurrentUser);
+
+router.put(
+  '/update-password',
+  [authHandler, validateUpdatePassword],
+  updatePassword
+);
 
 module.exports = router;

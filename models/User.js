@@ -19,11 +19,7 @@ const User = sequelize.define(
     },
     password: {
       type: Sequelize.STRING,
-      validate: {
-        isAlphanumeric: true,
-      },
       allowNull: false,
-      defaultValue: Sequelize.NOW,
     },
     createdAt: {
       type: Sequelize.DATEONLY,
@@ -43,6 +39,13 @@ const User = sequelize.define(
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(user.password, salt);
         user.password = hashedPassword;
+      },
+      beforeUpdate: async (user, options) => {
+        if (user.changed().includes('password')) {
+          const salt = await bcrypt.genSalt(10);
+          const hashedPassword = await bcrypt.hash(user.password, salt);
+          user.password = hashedPassword;
+        }
       },
     },
     defaultScope: {

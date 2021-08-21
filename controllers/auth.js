@@ -6,7 +6,10 @@ const asyncHandler = require('../middleware/asyncHandler');
 // @access        Public
 exports.login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({
+    where: { email },
+    attributes: { include: 'password' },
+  });
   if (!user) {
     return res.status(404).json({
       success: false,
@@ -62,5 +65,31 @@ exports.logout = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     msg: 'Logout route',
+  });
+});
+
+// @description   Update password
+// @route         PUT /api/v1/auth/update-password
+// @access        Private
+exports.updatePassword = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+  const { currentPassword, newPassword } = req.body;
+  const user = await User.findOne({
+    where: { id: userId },
+    attributes: { include: 'password' },
+  });
+
+  const authResult = await user.matchPassword(currentPassword);
+  if (!authResult) {
+    return res.status(401).json({
+      success: false,
+      errors: ['Incorrect Password'],
+    });
+  }
+
+  await user.update({ password: newPassword });
+  res.status(200).json({
+    success: true,
+    msg: 'Password updated',
   });
 });

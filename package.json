@@ -1,7 +1,7 @@
 {
   "name": "florasearch",
   "version": "1.0.0",
-  "description": "API for a Flower Classification Platform",
+  "description": "A Flower Classification Platform",
   "main": "server.js",
   "scripts": {
     "server": "nodemon server"

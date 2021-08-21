@@ -6,11 +6,13 @@ const {
   register,
   getCurrentUser,
   updatePassword,
+  deleteAccount,
 } = require('../controllers/auth');
 const {
   validateLogin,
   validateRegister,
   validateUpdatePassword,
+  validateDeleteAccount,
 } = require('../validators/auth');
 const authHandler = require('../middleware/authHandler');
 
@@ -28,6 +30,12 @@ router.put(
   '/update-password',
   [authHandler, validateUpdatePassword],
   updatePassword
+);
+
+router.put(
+  '/delete-account',
+  [authHandler, validateDeleteAccount],
+  deleteAccount
 );
 
 module.exports = router;

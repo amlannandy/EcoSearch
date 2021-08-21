@@ -93,3 +93,29 @@ exports.updatePassword = asyncHandler(async (req, res) => {
     msg: 'Password updated',
   });
 });
+
+// @description   Delete Account
+// @route         PUT /api/v1/auth/delete-account
+// @access        Private
+exports.deleteAccount = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+  const password = req.body.password;
+  const user = await User.findOne({
+    where: { id },
+    attributes: { include: 'password' },
+  });
+
+  const authResult = await user.matchPassword(password);
+  if (!authResult) {
+    return res.status(401).json({
+      success: false,
+      errors: ['Incorrect Password'],
+    });
+  }
+
+  await user.destroy();
+  res.status(200).json({
+    success: true,
+    msg: 'Account deleted',
+  });
+});

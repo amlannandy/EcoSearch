@@ -1,10 +1,10 @@
-const { Sequelize } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const { sequelize } = require('../db');
 
 const RevokedToken = sequelize.define('revoked_token', {
   token: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
 });

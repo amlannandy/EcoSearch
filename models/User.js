@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { Sequelize } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const { sequelize } = require('../db');
 
@@ -8,22 +8,22 @@ const User = sequelize.define(
   'user',
   {
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     email: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       unique: true,
       validate: {
         isEmail: true,
       },
     },
     password: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     createdAt: {
-      type: Sequelize.DATEONLY,
-      defaultValue: Sequelize.NOW,
+      type: DataTypes.DATEONLY,
+      defaultValue: DataTypes.NOW,
     },
   },
   {

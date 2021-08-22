@@ -7,6 +7,20 @@ exports.validateCreateRecord = [
     .not()
     .isEmpty()
     .withMessage('Please provide a description'),
+  check('latitude')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('Please provide latitude')
+    .isDecimal()
+    .withMessage('Latitude must be decimal'),
+  check('longitude')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('Please provide longitude')
+    .isDecimal()
+    .withMessage('Longitude must be decimal'),
   (req, res, next) => sendErrorResponse(req, res, next),
 ];
 

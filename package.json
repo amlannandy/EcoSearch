@@ -4,7 +4,9 @@
   "description": "A Flower Classification Platform",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server"
+    "server": "nodemon server",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"nodemon server\" \"cd client && npm start\""
   },
   "repository": {
     "type": "git",

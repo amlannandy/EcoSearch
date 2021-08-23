@@ -7,6 +7,7 @@ exports.validateCreateRecord = [
     .not()
     .isEmpty()
     .withMessage('Please provide a description'),
+  check('imageUrl').trim().not().isEmpty().withMessage('Error uploading image'),
   check('latitude')
     .trim()
     .not()

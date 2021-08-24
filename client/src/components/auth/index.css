@@ -1,0 +1,17 @@
+.header {
+  text-align: center;
+}
+.header p {
+  opacity: 70%;
+}
+.forgot-password-text {
+  text-align: center;
+  padding: 20px;
+}
+.forgot-password-text :only-child {
+  color: var(--primary);
+}
+.forgot-password-text:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}

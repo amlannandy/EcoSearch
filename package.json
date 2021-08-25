@@ -26,6 +26,7 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.26.3",
     "colors": "^1.4.0",
+    "concurrently": "^6.2.1",
     "cors": "^2.8.5",
     "datauri": "^4.1.0",
     "dotenv": "^10.0.0",

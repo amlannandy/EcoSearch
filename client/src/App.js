@@ -5,6 +5,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './app.css';
 import store from './utils/store';
 import { loadUser } from './actions/index';
+import GuestRoute from './utils/guestRoute';
+
 import Home from './components/home/index';
 import Auth from './components/auth/index';
 
@@ -19,7 +21,7 @@ class App extends Component {
         <Fragment>
           <BrowserRouter>
             <Switch>
-              <Route path='/auth' component={Auth} />
+              <GuestRoute path='/auth' component={Auth} />
               <Route path='/' component={Home} />
             </Switch>
           </BrowserRouter>

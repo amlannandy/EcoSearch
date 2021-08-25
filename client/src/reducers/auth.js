@@ -2,6 +2,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
 } from '../constants/index';
 
 const initialState = {
@@ -9,6 +12,7 @@ const initialState = {
   authActions: {
     error: null,
     message: null,
+    isLoading: false,
     isInitialized: false,
     isAuthenticated: false,
     isAuthenticating: false,
@@ -42,6 +46,34 @@ const auth = (state = initialState, action) => {
           ...state.authActions,
           error: payload,
           isAuthenticating: false,
+        },
+      };
+    case LOAD_USER_REQUEST:
+      return {
+        ...state,
+        authActions: {
+          ...state.authActions,
+          isLoading: true,
+        },
+      };
+    case LOAD_USER_SUCCESS:
+      return {
+        ...state,
+        user: payload,
+        authActions: {
+          ...state.authActions,
+          isLoading: false,
+          isInitialized: true,
+          isAuthenticated: true,
+        },
+      };
+    case LOAD_USER_FAILURE:
+      return {
+        ...state,
+        authActions: {
+          ...state.authActions,
+          isLoading: false,
+          isInitialized: true,
         },
       };
     default:

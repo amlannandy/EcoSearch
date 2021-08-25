@@ -3,6 +3,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
 } from '../constants/index';
 import { saveTokenToLocalStorage } from '../utils/authToken';
 
@@ -30,6 +33,25 @@ export const login = (email, password, errorCallback) => {
   }
   function failure(error) {
     return { type: LOGIN_FAILURE, payload: error };
+  }
+};
+
+export const loadUser = () => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .get('/auth/current-user')
+      .then(res => dispatch(success(res.data.data)))
+      .catch(() => dispatch(failure()));
+  };
+  function request() {
+    return { type: LOAD_USER_REQUEST };
+  }
+  function success(data) {
+    return { type: LOAD_USER_SUCCESS, payload: data };
+  }
+  function failure() {
+    return { type: LOAD_USER_FAILURE };
   }
 };
 

@@ -1,0 +1,11 @@
+.map-container {
+  height: -webkit-fill-available;
+  width: 100%;
+  position: fixed;
+}
+.map-navbar {
+  position: absolute;
+  top: 0px;
+  width: -webkit-fill-available;
+  right: 0px;
+}

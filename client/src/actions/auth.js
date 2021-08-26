@@ -3,6 +3,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
@@ -33,6 +36,33 @@ export const login = (email, password, errorCallback) => {
   }
   function failure(error) {
     return { type: LOGIN_FAILURE, payload: error };
+  }
+};
+
+export const register = (postData, errorCallback) => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .post('/auth/register', postData)
+      .then(res => {
+        const token = res.data.data;
+        saveTokenToLocalStorage(token);
+        dispatch(success());
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        errorCallback(errorMessage);
+        dispatch(failure(errorMessage));
+      });
+  };
+  function request() {
+    return { type: REGISTER_REQUEST };
+  }
+  function success() {
+    return { type: REGISTER_SUCCESS };
+  }
+  function failure(error) {
+    return { type: REGISTER_FAILURE, payload: error };
   }
 };
 

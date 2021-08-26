@@ -2,6 +2,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
@@ -23,6 +26,7 @@ const auth = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case LOGIN_REQUEST:
+    case REGISTER_REQUEST:
       return {
         ...state,
         authActions: {
@@ -31,6 +35,7 @@ const auth = (state = initialState, action) => {
         },
       };
     case LOGIN_SUCCESS:
+    case REGISTER_SUCCESS:
       return {
         ...state,
         authActions: {
@@ -40,6 +45,7 @@ const auth = (state = initialState, action) => {
         },
       };
     case LOGIN_FAILURE:
+    case REGISTER_FAILURE:
       return {
         ...state,
         authActions: {

@@ -64,6 +64,7 @@ class Login extends Component {
         <WhiteSpace size='lg' />
         <InputItem
           name='email'
+          type='email'
           value={email}
           error={errors.emailError}
           placeholder='Enter email address'

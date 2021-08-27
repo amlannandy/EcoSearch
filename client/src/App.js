@@ -1,14 +1,16 @@
-import React, { Component, Fragment } from 'react';
 import { Provider } from 'react-redux';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import './app.css';
 import store from './utils/store';
 import { loadUser } from './actions/index';
 import GuestRoute from './utils/guestRoute';
+import PrivateRoute from './utils/privateRoute';
 
 import Home from './components/home/index';
 import Auth from './components/auth/index';
+import Menu from './components/menu/index';
 
 class App extends Component {
   componentDidMount() {
@@ -21,6 +23,7 @@ class App extends Component {
         <Fragment>
           <BrowserRouter>
             <Switch>
+              <PrivateRoute path='/menu' component={Menu} />
               <GuestRoute path='/auth' component={Auth} />
               <Route path='/' component={Home} />
             </Switch>

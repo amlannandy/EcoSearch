@@ -27,7 +27,11 @@ class Index extends Component {
             onClick={() => history.push('/update-password')}>
             Update Password
           </List.Item>
-          <List.Item arrow='horizontal'>Delete Account</List.Item>
+          <List.Item
+            arrow='horizontal'
+            onClick={() => history.push('/delete-account')}>
+            Delete Account
+          </List.Item>
           <List.Item arrow='horizontal' onClick={this.handleLogout}>
             Logout
           </List.Item>

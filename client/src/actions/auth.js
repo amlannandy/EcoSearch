@@ -15,6 +15,9 @@ import {
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAILURE,
+  DELETE_ACCOUNT_REQUEST,
+  DELETE_ACCOUNT_SUCCESS,
+  DELETE_ACCOUNT_FAILURE,
 } from '../constants/index';
 import {
   saveTokenToLocalStorage,
@@ -144,6 +147,32 @@ export const updatePassword = (
   }
   function failure() {
     return { type: UPDATE_PASSWORD_FAILURE };
+  }
+};
+
+export const deleteAccount = (password, successCallback, errorCallback) => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .put('/auth/delete-account', { password })
+      .then(() => {
+        successCallback();
+        dispatch(success());
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        errorCallback(errorMessage);
+        dispatch(failure());
+      });
+  };
+  function request() {
+    return { type: DELETE_ACCOUNT_REQUEST };
+  }
+  function success() {
+    return { type: DELETE_ACCOUNT_SUCCESS };
+  }
+  function failure() {
+    return { type: DELETE_ACCOUNT_FAILURE };
   }
 };
 

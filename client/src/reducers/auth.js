@@ -14,6 +14,9 @@ import {
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAILURE,
+  DELETE_ACCOUNT_REQUEST,
+  DELETE_ACCOUNT_SUCCESS,
+  DELETE_ACCOUNT_FAILURE,
 } from '../constants/index';
 
 const initialState = {
@@ -101,6 +104,7 @@ const auth = (state = initialState, action) => {
           isAuthenticated: false,
         },
       };
+    case DELETE_ACCOUNT_REQUEST:
     case UPDATE_PASSWORD_REQUEST:
       return {
         ...state,
@@ -117,6 +121,7 @@ const auth = (state = initialState, action) => {
           isUpdating: false,
         },
       };
+    case DELETE_ACCOUNT_FAILURE:
     case UPDATE_PASSWORD_FAILURE:
       return {
         ...state,
@@ -124,6 +129,16 @@ const auth = (state = initialState, action) => {
           ...state.authActions,
           isUpdating: false,
           error: payload,
+        },
+      };
+    case DELETE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        user: null,
+        authActions: {
+          ...state.authActions,
+          isUpdating: false,
+          isAuthenticated: false,
         },
       };
     default:

@@ -9,8 +9,14 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
 } from '../constants/index';
-import { saveTokenToLocalStorage } from '../utils/authToken';
+import {
+  saveTokenToLocalStorage,
+  deleteTokenFromLocalStorage,
+} from '../utils/authToken';
 
 export const login = (email, password, errorCallback) => {
   return dispatch => {
@@ -82,6 +88,28 @@ export const loadUser = () => {
   }
   function failure() {
     return { type: LOAD_USER_FAILURE };
+  }
+};
+
+export const logout = () => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .post('/auth/logout')
+      .then(() => {
+        deleteTokenFromLocalStorage();
+        dispatch(success());
+      })
+      .catch(err => dispatch(failure(getErrorFromResponse(err))));
+  };
+  function request() {
+    return { type: LOGOUT_REQUEST };
+  }
+  function success() {
+    return { type: LOGOUT_SUCCESS };
+  }
+  function failure() {
+    return { type: LOGOUT_FAILURE };
   }
 };
 

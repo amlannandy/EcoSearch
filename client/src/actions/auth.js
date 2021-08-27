@@ -12,6 +12,9 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAILURE,
 } from '../constants/index';
 import {
   saveTokenToLocalStorage,
@@ -110,6 +113,37 @@ export const logout = () => {
   }
   function failure() {
     return { type: LOGOUT_FAILURE };
+  }
+};
+
+export const updatePassword = (
+  currentPassword,
+  newPassword,
+  successCallback,
+  errorCallback
+) => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .put('/auth/update-password', { currentPassword, newPassword })
+      .then(() => {
+        successCallback();
+        dispatch(success());
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        errorCallback(errorMessage);
+        dispatch(failure());
+      });
+  };
+  function request() {
+    return { type: UPDATE_PASSWORD_REQUEST };
+  }
+  function success() {
+    return { type: UPDATE_PASSWORD_SUCCESS };
+  }
+  function failure() {
+    return { type: UPDATE_PASSWORD_FAILURE };
   }
 };
 

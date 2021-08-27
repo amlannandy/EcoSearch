@@ -11,6 +11,9 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAILURE,
 } from '../constants/index';
 
 const initialState = {
@@ -19,6 +22,7 @@ const initialState = {
     error: null,
     message: null,
     isLoading: false,
+    isUpdating: false,
     isInitialized: false,
     isAuthenticated: false,
     isAuthenticating: false,
@@ -95,6 +99,31 @@ const auth = (state = initialState, action) => {
           ...state.authActions,
           isAuthenticating: false,
           isAuthenticated: false,
+        },
+      };
+    case UPDATE_PASSWORD_REQUEST:
+      return {
+        ...state,
+        authActions: {
+          ...state.authActions,
+          isUpdating: true,
+        },
+      };
+    case UPDATE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        authActions: {
+          ...state.authActions,
+          isUpdating: false,
+        },
+      };
+    case UPDATE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        authActions: {
+          ...state.authActions,
+          isUpdating: false,
+          error: payload,
         },
       };
     default:

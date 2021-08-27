@@ -21,6 +21,10 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    imageUrl: {
+      type: DataTypes.STRING,
+      defaultValue: process.env.AVATAR_IMAGE_URL,
+    },
     createdAt: {
       type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW,

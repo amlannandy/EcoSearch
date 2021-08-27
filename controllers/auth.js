@@ -1,9 +1,11 @@
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
+const uploadImage = require('../utils/uploadImage');
 const RevokedToken = require('../models/RevokedToken');
-const { sendPasswordResetmail } = require('../utils/sendMail');
+const ErrorResponse = require('../models/ErrorResponse');
 const asyncHandler = require('../middleware/asyncHandler');
+const { sendPasswordResetmail } = require('../utils/sendMail');
 
 // @description   Login user
 // @route         POST /api/v1/auth/login
@@ -168,5 +170,30 @@ exports.resetPassword = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     msg: 'Password reset',
+  });
+});
+
+// @description   Upload image
+// @route         PUT /api/v1/auth/upload-image
+// @access        Public
+exports.uploadProfileImage = asyncHandler(async (req, res, next) => {
+  const file = req.file;
+  if (!req.file) {
+    return next(new ErrorResponse('Please upload a file', 400));
+  }
+  // Make sure file is an image
+  if (!file.mimetype.startsWith('image')) {
+    return next(new ErrorResponse('Please upload an image', 400));
+  }
+
+  const userId = req.user.id;
+  const user = await User.findOne({ where: { id: userId } });
+  const imageUrl = await uploadImage(file);
+
+  await user.update({ imageUrl });
+
+  res.status(200).json({
+    success: true,
+    msg: 'Profile picture updated',
   });
 });

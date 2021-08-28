@@ -17,6 +17,9 @@ import {
   DELETE_ACCOUNT_REQUEST,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
 } from '../constants/index';
 
 const initialState = {
@@ -26,6 +29,7 @@ const initialState = {
     message: null,
     isLoading: false,
     isUpdating: false,
+    isResetting: false,
     isInitialized: false,
     isAuthenticated: false,
     isAuthenticating: false,
@@ -139,6 +143,31 @@ const auth = (state = initialState, action) => {
           ...state.authActions,
           isUpdating: false,
           isAuthenticated: false,
+        },
+      };
+    case FORGOT_PASSWORD_REQUEST:
+      return {
+        ...state,
+        authActions: {
+          ...state.authActions,
+          isResetting: true,
+        },
+      };
+    case FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        authActions: {
+          ...state.authActions,
+          isResetting: false,
+        },
+      };
+    case FORGOT_PASSWORD_FAILURE:
+      return {
+        ...state,
+        authActions: {
+          ...state.authActions,
+          isResetting: false,
+          error: payload,
         },
       };
     default:

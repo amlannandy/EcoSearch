@@ -18,6 +18,9 @@ import {
   DELETE_ACCOUNT_REQUEST,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
 } from '../constants/index';
 import {
   saveTokenToLocalStorage,
@@ -173,6 +176,32 @@ export const deleteAccount = (password, successCallback, errorCallback) => {
   }
   function failure() {
     return { type: DELETE_ACCOUNT_FAILURE };
+  }
+};
+
+export const forgotPassword = (email, successCallback, errorCallback) => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .put('/auth/forgot-password', { email })
+      .then(() => {
+        successCallback();
+        dispatch(success());
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        errorCallback(errorMessage);
+        dispatch(failure());
+      });
+  };
+  function request() {
+    return { type: FORGOT_PASSWORD_REQUEST };
+  }
+  function success() {
+    return { type: FORGOT_PASSWORD_SUCCESS };
+  }
+  function failure() {
+    return { type: FORGOT_PASSWORD_FAILURE };
   }
 };
 

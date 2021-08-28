@@ -7,7 +7,7 @@ exports.sendPasswordResetmail = async (email, token) => {
       apiKey: process.env.V2_API_KEY,
     })
   );
-  const url = `${process.env.API_URL}/api/v1/auth/reset-password/${token}`;
+  const url = `${process.env.API_URL}/reset-password/${token}`;
   await transporter.sendMail({
     to: email,
     fromName: 'FloraSearch',

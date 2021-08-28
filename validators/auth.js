@@ -80,7 +80,11 @@ exports.validateResetPassword = [
     .trim()
     .not()
     .isEmpty()
-    .withMessage('Please provide a password'),
+    .withMessage('Please provide a new password')
+    .isLength({ min: 6 })
+    .withMessage('Password must be atleast 6 characters long')
+    .isAlphanumeric()
+    .withMessage('Password must contain both alphabets and numbers'),
   (req, res, next) => sendErrorResponse(req, res, next),
 ];
 

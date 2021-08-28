@@ -12,6 +12,7 @@ import Home from './components/home/index';
 import Auth from './components/auth/index';
 import Menu from './components/menu/index';
 import DeleteAccount from './components/menu/deleteAccount';
+import ResetPassword from './components/auth/resetPassword';
 import ForgotPassword from './components/auth/forgotPassword';
 import UpdatePassword from './components/menu/updatePassword';
 
@@ -32,6 +33,10 @@ class App extends Component {
               />
               <PrivateRoute path='/delete-account' component={DeleteAccount} />
               <GuestRoute path='/forgot-password' component={ForgotPassword} />
+              <GuestRoute
+                path='/reset-password/:token'
+                component={ResetPassword}
+              />
               <PrivateRoute path='/menu' component={Menu} />
               <GuestRoute path='/auth' component={Auth} />
               <Route path='/' component={Home} />

@@ -20,6 +20,9 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILURE,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
 } from '../constants/index';
 
 const initialState = {
@@ -145,6 +148,7 @@ const auth = (state = initialState, action) => {
           isAuthenticated: false,
         },
       };
+    case RESET_PASSWORD_REQUEST:
     case FORGOT_PASSWORD_REQUEST:
       return {
         ...state,
@@ -153,6 +157,7 @@ const auth = (state = initialState, action) => {
           isResetting: true,
         },
       };
+    case RESET_PASSWORD_SUCCESS:
     case FORGOT_PASSWORD_SUCCESS:
       return {
         ...state,
@@ -161,6 +166,7 @@ const auth = (state = initialState, action) => {
           isResetting: false,
         },
       };
+    case RESET_PASSWORD_FAILURE:
     case FORGOT_PASSWORD_FAILURE:
       return {
         ...state,

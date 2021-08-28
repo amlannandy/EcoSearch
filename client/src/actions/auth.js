@@ -21,6 +21,9 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILURE,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
 } from '../constants/index';
 import {
   saveTokenToLocalStorage,
@@ -202,6 +205,37 @@ export const forgotPassword = (email, successCallback, errorCallback) => {
   }
   function failure() {
     return { type: FORGOT_PASSWORD_FAILURE };
+  }
+};
+
+export const resetPassword = (
+  token,
+  password,
+  successCallback,
+  errorCallback
+) => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .put(`/auth/reset-password/${token}`, { password })
+      .then(() => {
+        successCallback();
+        dispatch(success());
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        errorCallback(errorMessage);
+        dispatch(failure(errorMessage));
+      });
+  };
+  function request() {
+    return { type: RESET_PASSWORD_REQUEST };
+  }
+  function success() {
+    return { type: RESET_PASSWORD_SUCCESS };
+  }
+  function failure() {
+    return { type: RESET_PASSWORD_FAILURE };
   }
 };
 

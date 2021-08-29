@@ -1,22 +1,46 @@
+import { Card } from 'antd-mobile';
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Card, Icon } from 'antd-mobile';
+import { FaUserPlus, FaCamera } from 'react-icons/fa';
 
 import './css/landingCard.css';
 import Logo from '../../static/logo.png';
 
 class LandingCard extends Component {
   render() {
+    const {
+      history,
+      auth: { authActions, user },
+    } = this.props;
+
     return (
       <div className='card-container'>
         <Card>
           <Card.Body>
             <div className='card-inner-container'>
               <img src={Logo} alt='logo' />
+              {authActions.isAuthenticated && user ? (
+                <div className='inner-text'>
+                  <p>Hello, {user.name}</p>
+                  <small>Upload a flower picture now!</small>
+                </div>
+              ) : (
+                <div className='inner-text'>
+                  <p>Welcome to FloraSearch</p>
+                  <small>Login to upload your pictures</small>
+                </div>
+              )}
               <div>
-                <p>Welcome to EcoSearch</p>
-                <small>Login to upload your pictures</small>
+                {authActions.isAuthenticated && user ? (
+                  <FaCamera className='gray-icon' size={40} />
+                ) : (
+                  <FaUserPlus
+                    className='gray-icon'
+                    size={40}
+                    onClick={() => history.push('/auth')}
+                  />
+                )}
               </div>
-              <Icon type='up' size='lg' />
             </div>
           </Card.Body>
         </Card>
@@ -25,4 +49,10 @@ class LandingCard extends Component {
   }
 }
 
-export default LandingCard;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  };
+};
+
+export default connect(mapStateToProps)(LandingCard);

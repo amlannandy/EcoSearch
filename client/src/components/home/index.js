@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import GoogleMap from 'google-map-react';
 import { NavBar } from 'antd-mobile';
@@ -16,7 +17,10 @@ const defaultProps = {
 
 class Index extends Component {
   render() {
-    const { history } = this.props;
+    const {
+      history,
+      auth: { authActions },
+    } = this.props;
 
     return (
       <div className='map-container'>
@@ -27,17 +31,25 @@ class Index extends Component {
         <NavBar
           className='map-navbar'
           leftContent={
-            <FaBars
-              className='clickable'
-              onClick={() => history.push('/menu')}
-            />
+            authActions.isAuthenticated ? (
+              <FaBars
+                className='clickable'
+                onClick={() => history.push('/menu')}
+              />
+            ) : null
           }>
           FloraSearch
         </NavBar>
-        <LandingCard />
+        <LandingCard history={history} />
       </div>
     );
   }
 }
 
-export default Index;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  };
+};
+
+export default connect(mapStateToProps)(Index);

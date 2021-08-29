@@ -5,11 +5,22 @@
 }
 .card-inner-container {
   display: flex;
+  align-items: center;
 }
-.card-container div {
+.inner-text {
   flex: 1;
-  padding: 0px 10px;
+  padding: 0px 15px;
+}
+.inner-text p {
+  margin: 0;
+  font-weight: bold;
+}
+.inner-text small {
+  opacity: 0.7;
 }
 .card-container img {
   height: 4rem;
+}
+.gray-icon {
+  color: grey;
 }

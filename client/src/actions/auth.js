@@ -39,6 +39,7 @@ export const login = (email, password, errorCallback) => {
         const token = res.data.data;
         saveTokenToLocalStorage(token);
         dispatch(success());
+        dispatch(loadUser());
       })
       .catch(err => {
         const errorMessage = getErrorFromResponse(err);
@@ -66,6 +67,7 @@ export const register = (postData, errorCallback) => {
         const token = res.data.data;
         saveTokenToLocalStorage(token);
         dispatch(success());
+        dispatch(loadUser());
       })
       .catch(err => {
         const errorMessage = getErrorFromResponse(err);

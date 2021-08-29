@@ -1,0 +1,24 @@
+.circle-avatar {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+.circle-avatar img {
+  border-radius: 50%;
+  height: 8rem;
+  width: 8rem;
+  object-fit: cover;
+}
+
+.circle-avatar p {
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+.circle-avatar small {
+  opacity: 0.6;
+  font-size: 0.9rem;
+}

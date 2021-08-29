@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
-import { NavBar, List } from 'antd-mobile';
+import { NavBar, List, WingBlank, WhiteSpace, Badge } from 'antd-mobile';
 import { FaChevronLeft } from 'react-icons/fa';
 import React, { Component, Fragment } from 'react';
 
+import './css/index.css';
 import { logout } from '../../actions/auth';
 
 class Index extends Component {
@@ -12,7 +13,10 @@ class Index extends Component {
   };
 
   render() {
-    const { history } = this.props;
+    const {
+      history,
+      auth: { user, authActions },
+    } = this.props;
 
     return (
       <Fragment>
@@ -21,6 +25,27 @@ class Index extends Component {
           leftContent={<FaChevronLeft onClick={() => history.goBack()} />}>
           Menu
         </NavBar>
+        {authActions.isAuthenticated && user ? (
+          <WingBlank className='circle-avatar'>
+            <WhiteSpace size='lg' />
+            <div>
+              <Badge
+                text='EDIT'
+                onClick={() => history.push('/upload-image')}
+                style={{
+                  marginLeft: -25,
+                  padding: '1px 5px',
+                  backgroundColor: '#21b68a',
+                  borderRadius: 10,
+                }}>
+                <img src={user.imageUrl} alt='Profile Picture' />
+              </Badge>
+            </div>
+            <p>{user.name}</p>
+            <small>{user.email}</small>
+            <WhiteSpace size='lg' />
+          </WingBlank>
+        ) : null}
         <List>
           <List.Item
             arrow='horizontal'

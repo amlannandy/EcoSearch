@@ -27,6 +27,9 @@ import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
   UPLOAD_IMAGE_FAILURE,
+  UPDATE_INFO_REQUEST,
+  UPDATE_INFO_SUCCESS,
+  UPDATE_INFO_FAILURE,
 } from '../constants/index';
 import {
   saveTokenToLocalStorage,
@@ -241,6 +244,32 @@ export const resetPassword = (
   }
   function failure() {
     return { type: RESET_PASSWORD_FAILURE };
+  }
+};
+
+export const updateInfo = (name, successCallback, errorCallback) => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .put('/auth/update-info', { name })
+      .then(() => {
+        successCallback();
+        dispatch(success());
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        errorCallback(errorMessage);
+        dispatch(failure(errorMessage));
+      });
+  };
+  function request() {
+    return { type: UPDATE_INFO_REQUEST };
+  }
+  function success() {
+    return { type: UPDATE_INFO_SUCCESS };
+  }
+  function failure() {
+    return { type: UPDATE_INFO_FAILURE };
   }
 };
 

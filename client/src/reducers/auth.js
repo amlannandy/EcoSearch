@@ -26,6 +26,9 @@ import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
   UPLOAD_IMAGE_FAILURE,
+  UPDATE_INFO_REQUEST,
+  UPDATE_INFO_SUCCESS,
+  UPDATE_INFO_FAILURE,
 } from '../constants/index';
 
 const initialState = {
@@ -114,6 +117,7 @@ const auth = (state = initialState, action) => {
           isAuthenticated: false,
         },
       };
+    case UPDATE_INFO_REQUEST:
     case UPLOAD_IMAGE_REQUEST:
     case DELETE_ACCOUNT_REQUEST:
     case UPDATE_PASSWORD_REQUEST:
@@ -124,6 +128,7 @@ const auth = (state = initialState, action) => {
           isUpdating: true,
         },
       };
+    case UPDATE_INFO_SUCCESS:
     case UPLOAD_IMAGE_SUCCESS:
     case UPDATE_PASSWORD_SUCCESS:
       return {
@@ -133,6 +138,7 @@ const auth = (state = initialState, action) => {
           isUpdating: false,
         },
       };
+    case UPDATE_INFO_FAILURE:
     case UPLOAD_IMAGE_FAILURE:
     case DELETE_ACCOUNT_FAILURE:
     case UPDATE_PASSWORD_FAILURE:

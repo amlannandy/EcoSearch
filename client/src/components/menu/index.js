@@ -49,6 +49,11 @@ class Index extends Component {
         <List>
           <List.Item
             arrow='horizontal'
+            onClick={() => history.push('/update-info')}>
+            Update Info
+          </List.Item>
+          <List.Item
+            arrow='horizontal'
             onClick={() => history.push('/update-password')}>
             Update Password
           </List.Item>

@@ -11,6 +11,7 @@ import PrivateRoute from './utils/privateRoute';
 import Home from './components/home/index';
 import Auth from './components/auth/index';
 import Menu from './components/menu/index';
+import UpdateInfo from './components/menu/updateInfo';
 import UploadImage from './components/menu/uploadImage';
 import DeleteAccount from './components/menu/deleteAccount';
 import ResetPassword from './components/auth/resetPassword';
@@ -32,6 +33,7 @@ class App extends Component {
                 path='/update-password'
                 component={UpdatePassword}
               />
+              <PrivateRoute path='/update-info' component={UpdateInfo} />
               <PrivateRoute path='/upload-image' component={UploadImage} />
               <PrivateRoute path='/delete-account' component={DeleteAccount} />
               <GuestRoute path='/forgot-password' component={ForgotPassword} />

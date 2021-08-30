@@ -17,7 +17,7 @@ exports.getUserRecords = asyncHandler(async (req, res) => {
 
 // @description   Get all records
 // @route         GET /api/v1/records/explore
-// @access        Private
+// @access        Public
 exports.getAllRecords = asyncHandler(async (req, res) => {
   const records = await Record.findAll({ limit: 50 });
   res.status(200).json({
@@ -64,5 +64,74 @@ exports.uploadRecordImage = asyncHandler(async (req, res, next) => {
     success: true,
     msg: 'Image uploaded',
     data: imageUrl,
+  });
+});
+
+// @description   Get record by id
+// @route         GET /api/v1/records/:id
+// @access        Public
+exports.getRecordById = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const record = await Record.findOne({ where: { id } });
+  if (!record) {
+    return res.status(404).json({
+      success: true,
+      errors: ['Record not found'],
+    });
+  }
+  res.status(200).json({
+    success: true,
+    data: record,
+  });
+});
+
+// @description   Update record by id
+// @route         PUT /api/v1/records/:id
+// @access        Private
+exports.updateRecordById = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const { title, description } = req.body;
+  const record = await Record.findOne({ where: { id } });
+  if (!record) {
+    return res.status(404).json({
+      success: true,
+      errors: ['Record not found'],
+    });
+  }
+  if (record.userId !== req.user.id) {
+    return res.status(401).json({
+      success: false,
+      errors: ['Not allowed to edit this record'],
+    });
+  }
+  await record.update({ title, description });
+  res.status(200).json({
+    success: true,
+    msg: 'Record updated',
+  });
+});
+
+// @description   Delete record by id
+// @route         DELETE /api/v1/records/:id
+// @access        Private
+exports.deleteRecordById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const record = await Record.findOne({ where: { id } });
+  if (!record) {
+    return res.status(404).json({
+      success: false,
+      errors: ['Record not found'],
+    });
+  }
+  if (record.userId !== req.user.id) {
+    return res.status(401).json({
+      success: false,
+      errors: ['Not allowed to delete this record'],
+    });
+  }
+  await record.destroy();
+  res.status(200).json({
+    success: true,
+    msg: 'Record deleted',
   });
 });

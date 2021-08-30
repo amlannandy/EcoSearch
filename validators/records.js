@@ -25,6 +25,16 @@ exports.validateCreateRecord = [
   (req, res, next) => sendErrorResponse(req, res, next),
 ];
 
+exports.validateEditRecord = [
+  check('title').trim().not().isEmpty().withMessage('Please provide a title'),
+  check('description')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('Please provide a description'),
+  (req, res, next) => sendErrorResponse(req, res, next),
+];
+
 const sendErrorResponse = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

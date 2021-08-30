@@ -24,6 +24,9 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILURE,
+  UPLOAD_IMAGE_REQUEST,
+  UPLOAD_IMAGE_SUCCESS,
+  UPLOAD_IMAGE_FAILURE,
 } from '../constants/index';
 import {
   saveTokenToLocalStorage,
@@ -238,6 +241,34 @@ export const resetPassword = (
   }
   function failure() {
     return { type: RESET_PASSWORD_FAILURE };
+  }
+};
+
+export const uploadImage = (file, successCallback, errorCallback) => {
+  return dispatch => {
+    dispatch(request());
+    let formData = new FormData();
+    formData.append('file', file);
+    axios
+      .put('/auth/upload-image', formData)
+      .then(() => {
+        dispatch(success());
+        successCallback();
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        dispatch(failure(errorMessage));
+        errorCallback(errorMessage);
+      });
+  };
+  function request() {
+    return { type: UPLOAD_IMAGE_REQUEST };
+  }
+  function success() {
+    return { type: UPLOAD_IMAGE_SUCCESS };
+  }
+  function failure() {
+    return { type: UPLOAD_IMAGE_FAILURE };
   }
 };
 

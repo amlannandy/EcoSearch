@@ -23,6 +23,9 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILURE,
+  UPLOAD_IMAGE_REQUEST,
+  UPLOAD_IMAGE_SUCCESS,
+  UPLOAD_IMAGE_FAILURE,
 } from '../constants/index';
 
 const initialState = {
@@ -111,6 +114,7 @@ const auth = (state = initialState, action) => {
           isAuthenticated: false,
         },
       };
+    case UPLOAD_IMAGE_REQUEST:
     case DELETE_ACCOUNT_REQUEST:
     case UPDATE_PASSWORD_REQUEST:
       return {
@@ -120,6 +124,7 @@ const auth = (state = initialState, action) => {
           isUpdating: true,
         },
       };
+    case UPLOAD_IMAGE_SUCCESS:
     case UPDATE_PASSWORD_SUCCESS:
       return {
         ...state,
@@ -128,6 +133,7 @@ const auth = (state = initialState, action) => {
           isUpdating: false,
         },
       };
+    case UPLOAD_IMAGE_FAILURE:
     case DELETE_ACCOUNT_FAILURE:
     case UPDATE_PASSWORD_FAILURE:
       return {

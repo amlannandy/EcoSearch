@@ -38,7 +38,7 @@ class Index extends Component {
                   backgroundColor: '#21b68a',
                   borderRadius: 10,
                 }}>
-                <img src={user.imageUrl} alt='Profile Picture' />
+                <img src={user.imageUrl} alt='profile avatar' />
               </Badge>
             </div>
             <p>{user.name}</p>

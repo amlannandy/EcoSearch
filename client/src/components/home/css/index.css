@@ -9,3 +9,6 @@
   width: -webkit-fill-available;
   right: 0px;
 }
+.user-avatar {
+  border-radius: 50%;
+}

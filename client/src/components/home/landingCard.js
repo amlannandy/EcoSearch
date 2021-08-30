@@ -18,7 +18,11 @@ class LandingCard extends Component {
         <Card>
           <Card.Body>
             <div className='card-inner-container'>
-              <img src={Logo} alt='logo' />
+              {authActions.isAuthenticated && user ? (
+                <img className='user-avatar' src={user.imageUrl} alt='logo' />
+              ) : (
+                <img src={Logo} alt='logo' />
+              )}
               {authActions.isAuthenticated && user ? (
                 <div className='inner-text'>
                   <p>Hello, {user.name}</p>

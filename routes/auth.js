@@ -10,6 +10,7 @@ const {
   forgotPassword,
   resetPassword,
   uploadProfileImage,
+  updateInfo,
 } = require('../controllers/auth');
 const {
   validateLogin,
@@ -18,6 +19,7 @@ const {
   validateDeleteAccount,
   validateForgotPassword,
   validateResetPassword,
+  validateUpdateInfo,
 } = require('../validators/auth');
 const multerUploads = require('../middleware/multer');
 const authHandler = require('../middleware/authHandler');
@@ -49,5 +51,7 @@ router.put('/forgot-password', validateForgotPassword, forgotPassword);
 router.put('/reset-password/:token', validateResetPassword, resetPassword);
 
 router.put('/upload-image', [authHandler, multerUploads], uploadProfileImage);
+
+router.put('/update-info', [authHandler, validateUpdateInfo], updateInfo);
 
 module.exports = router;

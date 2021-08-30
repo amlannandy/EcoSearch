@@ -88,6 +88,11 @@ exports.validateResetPassword = [
   (req, res, next) => sendErrorResponse(req, res, next),
 ];
 
+exports.validateUpdateInfo = [
+  check('name').trim().not().isEmpty().withMessage('Please provide a name'),
+  (req, res, next) => sendErrorResponse(req, res, next),
+];
+
 const sendErrorResponse = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

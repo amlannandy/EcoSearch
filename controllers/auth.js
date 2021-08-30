@@ -149,6 +149,22 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
   });
 });
 
+// @description   Update info
+// @route         PUT /api/v1/auth/update-info
+// @access        Private
+exports.updateInfo = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+  const name = req.body.name;
+
+  const user = await User.findOne({ where: { id: userId } });
+  await user.update({ name });
+
+  res.status(200).json({
+    success: true,
+    msg: 'Info updated',
+  });
+});
+
 // @description   Reset password
 // @route         PUT /api/v1/auth/reset-password
 // @access        Public

@@ -1,5 +1,8 @@
 import axios from '../utils/axios';
 import {
+  ADD_RECORD_REQUEST,
+  ADD_RECORD_SUCCESS,
+  ADD_RECORD_FAILURE,
   FETCH_ALL_RECORDS_REQUEST,
   FETCH_ALL_RECORDS_SUCCESS,
   FETCH_ALL_RECORDS_FAILURE,
@@ -43,6 +46,46 @@ export const fetchUserRecords = () => {
   }
   function failure(err) {
     return { type: FETCH_USER_RECORDS_FAILURE, payload: err };
+  }
+};
+
+export const addRecord = (data, successCallback, errorCallback) => {
+  return dispatch => {
+    dispatch(request());
+    let formData = new FormData();
+    formData.append('file', data.image);
+    axios
+      .post('/records/upload-image', formData)
+      .then(res => {
+        const imageUrl = res.data.data;
+        let postData = { ...data, imageUrl };
+        delete postData.image;
+        axios
+          .post('/records/create', postData)
+          .then(() => {
+            dispatch(success());
+            successCallback();
+          })
+          .catch(err => {
+            const errorMessage = getErrorFromResponse(err);
+            dispatch(failure(errorMessage));
+            errorCallback(errorMessage);
+          });
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        dispatch(failure(errorMessage));
+        errorCallback(errorMessage);
+      });
+  };
+  function request() {
+    return { type: ADD_RECORD_REQUEST };
+  }
+  function success() {
+    return { type: ADD_RECORD_SUCCESS };
+  }
+  function failure(err) {
+    return { type: ADD_RECORD_FAILURE, payload: err };
   }
 };
 

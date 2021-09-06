@@ -13,6 +13,7 @@ import Auth from './components/auth/index';
 import Menu from './components/menu/index';
 import UserRecords from './components/records/index';
 import UpdateInfo from './components/menu/updateInfo';
+import AddRecord from './components/records/addRecord';
 import UploadImage from './components/menu/uploadImage';
 import DeleteAccount from './components/menu/deleteAccount';
 import ResetPassword from './components/auth/resetPassword';
@@ -31,6 +32,7 @@ class App extends Component {
         <Fragment>
           <BrowserRouter>
             <Switch>
+              <PrivateRoute path='/add-record' component={AddRecord} />
               <PrivateRoute path='/records/:id' component={RecordDetails} />
               <PrivateRoute path='/records' component={UserRecords} />
               <PrivateRoute

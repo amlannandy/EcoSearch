@@ -1,7 +1,7 @@
-import { NavBar, ActivityIndicator } from 'antd-mobile';
 import { connect } from 'react-redux';
-import { FaChevronLeft } from 'react-icons/fa';
 import React, { Component, Fragment } from 'react';
+import { FaChevronLeft, FaPlus } from 'react-icons/fa';
+import { NavBar, ActivityIndicator } from 'antd-mobile';
 
 import './css/index.css';
 import RecordItem from './recordItem';
@@ -26,6 +26,9 @@ class Index extends Component {
       <Fragment>
         <NavBar
           mode='light'
+          rightContent={[
+            <FaPlus onClick={() => history.push('/add-record')} />,
+          ]}
           leftContent={<FaChevronLeft onClick={() => history.goBack()} />}>
           Your Records
         </NavBar>

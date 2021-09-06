@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component, Fragment } from 'react';
-import { FaChevronLeft } from 'react-icons/fa';
+import { FaChevronLeft, FaStopCircle } from 'react-icons/fa';
 import {
   NavBar,
   Toast,
@@ -9,6 +9,7 @@ import {
   Button,
   InputItem,
   TextareaItem,
+  Card,
 } from 'antd-mobile';
 
 import './css/addRecord.css';
@@ -21,8 +22,31 @@ class AddRecord extends Component {
     description: '',
     image: null,
     imageUrl: '',
-    latitude: 23,
-    longitude: 27,
+    latitude: null,
+    longitude: null,
+    locationError: false,
+  };
+
+  componentDidMount() {
+    this.getCurrentLocation();
+  }
+
+  getCurrentLocation = () => {
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then(res => {
+        if (res.state === 'granted' || res.state === 'prompt') {
+          navigator.geolocation.getCurrentPosition(pos => {
+            this.setState({
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude,
+            });
+          });
+        } else {
+          this.setState({ locationError: true });
+        }
+      })
+      .catch(() => this.setState({ locationError: true }));
   };
 
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -56,7 +80,7 @@ class AddRecord extends Component {
         recordsActions: { isAdding },
       },
     } = this.props;
-    const { title, description, imageUrl } = this.state;
+    const { title, description, imageUrl, locationError } = this.state;
 
     return (
       <Fragment>
@@ -65,48 +89,71 @@ class AddRecord extends Component {
           leftContent={<FaChevronLeft onClick={() => history.goBack()} />}>
           Add Record
         </NavBar>
-        <WingBlank>
-          <WhiteSpace size='lg' />
-          <img
-            className='custom-image'
-            alt='profile-avatar'
-            src={imageUrl ? imageUrl : Placeholder}
-          />
-          <WhiteSpace size='lg' />
-          <InputItem
-            name='image'
-            type='file'
-            onChangeCapture={this.handleImageInput}
-            disabled={isAdding}
-          />
-          <WhiteSpace size='lg' />
-          <InputItem
-            name='title'
-            value={title}
-            error={!title}
-            placeholder='Enter title'
-            onChangeCapture={this.handleChange}
-            disabled={isAdding}
-          />
-          <WhiteSpace size='sm' />
-          <TextareaItem
-            rows={3}
-            name='description'
-            value={description}
-            error={!description}
-            placeholder='Enter description'
-            onChangeCapture={this.handleChange}
-            disabled={isAdding}
-          />
-          <WhiteSpace size='lg' />
-          <Button
-            type='primary'
-            onClick={this.handleAddRecord}
-            disabled={!title || !description || !imageUrl || isAdding}>
-            Save
-          </Button>
-          <WhiteSpace size='lg' />
-        </WingBlank>
+        {!locationError ? (
+          <WingBlank>
+            <WhiteSpace size='lg' />
+            <img
+              className='custom-image'
+              alt='profile-avatar'
+              src={imageUrl ? imageUrl : Placeholder}
+            />
+            <WhiteSpace size='lg' />
+            <InputItem
+              name='image'
+              type='file'
+              onChangeCapture={this.handleImageInput}
+              disabled={isAdding}
+            />
+            <WhiteSpace size='lg' />
+            <InputItem
+              name='title'
+              value={title}
+              error={!title}
+              placeholder='Enter title'
+              onChangeCapture={this.handleChange}
+              disabled={isAdding}
+            />
+            <WhiteSpace size='sm' />
+            <TextareaItem
+              rows={3}
+              name='description'
+              value={description}
+              error={!description}
+              placeholder='Enter description'
+              onChangeCapture={this.handleChange}
+              disabled={isAdding}
+            />
+            <WhiteSpace size='lg' />
+            <Button
+              type='primary'
+              onClick={this.handleAddRecord}
+              disabled={!title || !description || !imageUrl || isAdding}>
+              Save
+            </Button>
+            <WhiteSpace size='lg' />
+          </WingBlank>
+        ) : (
+          <WingBlank size='lg'>
+            <WhiteSpace size='lg' />
+            <Card>
+              <Card.Header
+                title='Location Error'
+                thumb={<FaStopCircle className='ml-5' />}
+              />
+              <Card.Body>
+                <strong>Error getting your location</strong>
+                <p>
+                  Please provide permission for getting your current location
+                  for geotagging
+                </p>
+                <Button type='warning' onClick={this.getCurrentLocation}>
+                  Grant
+                </Button>
+              </Card.Body>
+            </Card>
+            <WhiteSpace size='lg' />
+          </WingBlank>
+        )}
       </Fragment>
     );
   }

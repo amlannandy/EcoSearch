@@ -11,6 +11,9 @@ import {
   FETCH_USER_RECORDS_REQUEST,
   FETCH_USER_RECORDS_SUCCESS,
   FETCH_USER_RECORDS_FAILURE,
+  DELETE_RECORD_BY_ID_REQUEST,
+  DELETE_RECORD_BY_ID_SUCCESS,
+  DELETE_RECORD_BY_ID_FAILURE,
 } from '../constants/index';
 
 const initialState = {
@@ -18,6 +21,7 @@ const initialState = {
   record: null,
   recordsActions: {
     isAdding: false,
+    isDeleting: false,
     isFetching: false,
     error: null,
     message: null,
@@ -105,6 +109,32 @@ const records = (state = initialState, action) => {
           ...state.recordsActions,
           error: payload,
           isFetching: false,
+        },
+      };
+    case DELETE_RECORD_BY_ID_REQUEST:
+      return {
+        ...state,
+        recordsActions: {
+          ...state.recordsActions,
+          isDeleting: true,
+        },
+      };
+    case DELETE_RECORD_BY_ID_SUCCESS:
+      return {
+        ...state,
+        record: null,
+        recordsActions: {
+          ...state.recordsActions,
+          isDeleting: false,
+        },
+      };
+    case DELETE_RECORD_BY_ID_FAILURE:
+      return {
+        ...state,
+        recordsActions: {
+          ...state.recordsActions,
+          error: payload,
+          isDeleting: false,
         },
       };
     default:

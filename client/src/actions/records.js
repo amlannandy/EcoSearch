@@ -12,6 +12,9 @@ import {
   FETCH_USER_RECORDS_REQUEST,
   FETCH_USER_RECORDS_SUCCESS,
   FETCH_USER_RECORDS_FAILURE,
+  DELETE_RECORD_BY_ID_REQUEST,
+  DELETE_RECORD_BY_ID_SUCCESS,
+  DELETE_RECORD_BY_ID_FAILURE,
 } from '../constants/index';
 
 export const fetchAllRecords = () => {
@@ -108,6 +111,32 @@ export const getRecordById = id => {
   }
   function failure(err) {
     return { type: GET_RECORD_BY_ID_FAILURE, payload: err };
+  }
+};
+
+export const deleteRecordById = (id, successCallback, errorCallback) => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .delete(`/records/${id}`)
+      .then(() => {
+        dispatch(success());
+        successCallback();
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        dispatch(failure(errorMessage));
+        errorCallback(errorMessage);
+      });
+  };
+  function request() {
+    return { type: DELETE_RECORD_BY_ID_REQUEST };
+  }
+  function success() {
+    return { type: DELETE_RECORD_BY_ID_SUCCESS };
+  }
+  function failure(err) {
+    return { type: DELETE_RECORD_BY_ID_FAILURE, payload: err };
   }
 };
 

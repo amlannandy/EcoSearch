@@ -1,19 +1,37 @@
 import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import React, { Component, Fragment } from 'react';
-import { FaChevronLeft, FaMapPin } from 'react-icons/fa';
+import {
+  FaChevronLeft,
+  FaMapPin,
+  FaTrash,
+  FaEdit,
+  FaStopCircle,
+} from 'react-icons/fa';
 import {
   NavBar,
   WingBlank,
   WhiteSpace,
   ActivityIndicator,
   Badge,
+  Toast,
+  Card,
+  Popover,
+  Icon,
 } from 'antd-mobile';
 
 import './css/recordDetails.css';
-import { getRecordById } from '../../actions/index';
+import {
+  getRecordById,
+  deleteRecordById,
+  fetchUserRecords,
+} from '../../actions/index';
 
 class RecordDetails extends Component {
+  state = {
+    visible: false,
+  };
+
   componentDidMount() {
     const {
       match: {
@@ -24,12 +42,52 @@ class RecordDetails extends Component {
     getRecordById(id);
   }
 
+  handleVisibleChange = visible => this.setState({ visible });
+
+  onSelect = opt => {
+    const key = parseInt(opt.key);
+    switch (key) {
+      case 0:
+        console.log('Edit');
+        break;
+      case 1:
+        this.handleDeleteRecord();
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleDeleteRecord = () => {
+    const {
+      match: {
+        params: { id },
+      },
+      deleteRecordById,
+    } = this.props;
+    deleteRecordById(id, this.deleteSuccessCallback, this.errorCallback);
+  };
+
+  deleteSuccessCallback = () => {
+    const { history, fetchUserRecords } = this.props;
+    history.goBack();
+    Toast.success('Record deleted');
+    fetchUserRecords();
+  };
+
+  errorCallback = err => {
+    Toast.fail(err);
+  };
+
   render() {
     const {
       history,
       records: {
         record,
-        recordsActions: { isFetching, error },
+        recordsActions: { isFetching, isDeleting, error },
       },
     } = this.props;
 
@@ -37,21 +95,59 @@ class RecordDetails extends Component {
       <Fragment>
         <NavBar
           mode='light'
-          leftContent={<FaChevronLeft onClick={() => history.goBack()} />}>
+          leftContent={<FaChevronLeft onClick={() => history.goBack()} />}
+          rightContent={
+            <Popover
+              mask
+              visible={this.state.visible}
+              overlay={[
+                <Popover.Item key={0} icon={<FaEdit />}>
+                  Edit
+                </Popover.Item>,
+                <Popover.Item key={1} icon={<FaTrash />}>
+                  Delete
+                </Popover.Item>,
+              ]}
+              align={{
+                overflow: { adjustY: 0, adjustX: 0 },
+                offset: [-10, 0],
+              }}
+              onVisibleChange={this.handleVisibleChange}
+              onSelect={this.onSelect}>
+              <div className='popover'>
+                <Icon type='ellipsis' />
+              </div>
+            </Popover>
+          }>
           Record Details
         </NavBar>
-        {isFetching ? (
+        {isFetching || isDeleting ? (
           <div className='loading-container'>
             <ActivityIndicator text='Loading...' size='large' />
           </div>
-        ) : (
-          <div className='bg-white'>
+        ) : error && !record ? (
+          <WingBlank>
+            <WhiteSpace size='lg' />
+            <Card>
+              <Card.Header
+                title='Oops! Something went wrong!'
+                thumb={<FaStopCircle className='ml-5' />}
+              />
+              <Card.Body>
+                <strong>Error</strong>
+                <p>{error}</p>
+              </Card.Body>
+            </Card>
+            <WhiteSpace size='lg' />
+          </WingBlank>
+        ) : record ? (
+          <div className='screen'>
             <img
               className='image-container'
               src={record.imageUrl}
               alt='Record'
             />
-            <WingBlank>
+            <div className='py-5'>
               <h1>
                 {record.title}
                 <Badge
@@ -63,11 +159,11 @@ class RecordDetails extends Component {
               <hr />
               <WhiteSpace size='lg' />
               <strong>
-                <FaMapPin size={15} />
+                <FaMapPin size={15} className='mr-5' />
                 Your Location
               </strong>
               <WhiteSpace size='lg' />
-            </WingBlank>
+            </div>
             <div className='map-container'>
               <GoogleMapReact
                 bootstrapURLKeys={{
@@ -88,7 +184,7 @@ class RecordDetails extends Component {
               </GoogleMapReact>
             </div>
           </div>
-        )}
+        ) : null}
       </Fragment>
     );
   }
@@ -102,8 +198,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    fetchUserRecords: () => {
+      return dispatch(fetchUserRecords());
+    },
     getRecordById: id => {
       return dispatch(getRecordById(id));
+    },
+    deleteRecordById: (id, successCallback, errorCallback) => {
+      return dispatch(deleteRecordById(id, successCallback, errorCallback));
     },
   };
 };

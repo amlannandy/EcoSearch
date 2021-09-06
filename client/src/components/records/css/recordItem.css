@@ -1,0 +1,12 @@
+.record-item {
+  border-radius: 5px;
+  overflow: hidden;
+  width: 30vw;
+  height: 30vw;
+}
+.record-item img {
+  width: 30vw;
+  height: 30vw;
+  object-fit: cover;
+  z-index: -1;
+}

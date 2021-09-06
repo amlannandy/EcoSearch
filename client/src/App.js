@@ -11,12 +11,14 @@ import PrivateRoute from './utils/privateRoute';
 import Home from './components/home/index';
 import Auth from './components/auth/index';
 import Menu from './components/menu/index';
+import UserRecords from './components/records/index';
 import UpdateInfo from './components/menu/updateInfo';
 import UploadImage from './components/menu/uploadImage';
 import DeleteAccount from './components/menu/deleteAccount';
 import ResetPassword from './components/auth/resetPassword';
 import ForgotPassword from './components/auth/forgotPassword';
 import UpdatePassword from './components/menu/updatePassword';
+import RecordDetails from './components/records/recordDetails';
 
 class App extends Component {
   componentDidMount() {
@@ -29,6 +31,8 @@ class App extends Component {
         <Fragment>
           <BrowserRouter>
             <Switch>
+              <PrivateRoute path='/records/:id' component={RecordDetails} />
+              <PrivateRoute path='/records' component={UserRecords} />
               <PrivateRoute
                 path='/update-password'
                 component={UpdatePassword}

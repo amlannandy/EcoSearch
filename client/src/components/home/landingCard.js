@@ -36,7 +36,11 @@ class LandingCard extends Component {
               )}
               <div>
                 {authActions.isAuthenticated && user ? (
-                  <FaCamera className='gray-icon' size={40} />
+                  <FaCamera
+                    className='gray-icon'
+                    size={40}
+                    onClick={() => history.push('/records')}
+                  />
                 ) : (
                   <FaUserPlus
                     className='gray-icon'

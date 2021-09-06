@@ -3,6 +3,9 @@ import {
   FETCH_ALL_RECORDS_REQUEST,
   FETCH_ALL_RECORDS_SUCCESS,
   FETCH_ALL_RECORDS_FAILURE,
+  FETCH_USER_RECORDS_REQUEST,
+  FETCH_USER_RECORDS_SUCCESS,
+  FETCH_USER_RECORDS_FAILURE,
 } from '../constants/index';
 
 export const fetchAllRecords = () => {
@@ -21,6 +24,25 @@ export const fetchAllRecords = () => {
   }
   function failure(err) {
     return { type: FETCH_ALL_RECORDS_FAILURE, payload: err };
+  }
+};
+
+export const fetchUserRecords = () => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .get('/records')
+      .then(res => dispatch(success(res.data.data)))
+      .catch(err => dispatch(failure(getErrorFromResponse(err))));
+  };
+  function request() {
+    return { type: FETCH_USER_RECORDS_REQUEST };
+  }
+  function success(data) {
+    return { type: FETCH_USER_RECORDS_SUCCESS, payload: data };
+  }
+  function failure(err) {
+    return { type: FETCH_USER_RECORDS_FAILURE, payload: err };
   }
 };
 

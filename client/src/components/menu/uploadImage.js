@@ -21,7 +21,6 @@ class UploadImage extends Component {
   };
 
   handleImageInput = e => {
-    console.log(e);
     const image = e.target.files[0];
     const imageUrl = URL.createObjectURL(e.target.files[0]);
     this.setState({ image, imageUrl });

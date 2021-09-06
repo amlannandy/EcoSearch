@@ -1,0 +1,11 @@
+.custom-grid {
+  display: grid;
+  gap: 10px 10px;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 10px;
+}
+.loading-container {
+  position: absolute;
+  top: 40%;
+  left: 42%;
+}

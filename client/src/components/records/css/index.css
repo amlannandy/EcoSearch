@@ -4,8 +4,3 @@
   grid-template-columns: repeat(3, 1fr);
   margin: 10px;
 }
-.loading-container {
-  position: absolute;
-  top: 40%;
-  left: 42%;
-}

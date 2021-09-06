@@ -2,6 +2,9 @@ import {
   ADD_RECORD_REQUEST,
   ADD_RECORD_SUCCESS,
   ADD_RECORD_FAILURE,
+  GET_RECORD_BY_ID_REQUEST,
+  GET_RECORD_BY_ID_SUCCESS,
+  GET_RECORD_BY_ID_FAILURE,
   FETCH_ALL_RECORDS_REQUEST,
   FETCH_ALL_RECORDS_SUCCESS,
   FETCH_ALL_RECORDS_FAILURE,
@@ -12,6 +15,7 @@ import {
 
 const initialState = {
   records: [],
+  record: null,
   recordsActions: {
     isAdding: false,
     isFetching: false,
@@ -75,6 +79,32 @@ const records = (state = initialState, action) => {
           ...state.recordsActions,
           isAdding: false,
           error: payload,
+        },
+      };
+    case GET_RECORD_BY_ID_REQUEST:
+      return {
+        ...state,
+        recordsActions: {
+          ...state.recordsActions,
+          isFetching: true,
+        },
+      };
+    case GET_RECORD_BY_ID_SUCCESS:
+      return {
+        ...state,
+        record: payload,
+        recordsActions: {
+          ...state.recordsActions,
+          isFetching: false,
+        },
+      };
+    case GET_RECORD_BY_ID_FAILURE:
+      return {
+        ...state,
+        recordsActions: {
+          ...state.recordsActions,
+          error: payload,
+          isFetching: false,
         },
       };
     default:

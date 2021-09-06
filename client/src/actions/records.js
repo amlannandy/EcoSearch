@@ -3,6 +3,9 @@ import {
   ADD_RECORD_REQUEST,
   ADD_RECORD_SUCCESS,
   ADD_RECORD_FAILURE,
+  GET_RECORD_BY_ID_REQUEST,
+  GET_RECORD_BY_ID_SUCCESS,
+  GET_RECORD_BY_ID_FAILURE,
   FETCH_ALL_RECORDS_REQUEST,
   FETCH_ALL_RECORDS_SUCCESS,
   FETCH_ALL_RECORDS_FAILURE,
@@ -86,6 +89,25 @@ export const addRecord = (data, successCallback, errorCallback) => {
   }
   function failure(err) {
     return { type: ADD_RECORD_FAILURE, payload: err };
+  }
+};
+
+export const getRecordById = id => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .get(`/records/${id}`)
+      .then(res => dispatch(success(res.data.data)))
+      .catch(err => dispatch(failure(getErrorFromResponse(err))));
+  };
+  function request() {
+    return { type: GET_RECORD_BY_ID_REQUEST };
+  }
+  function success(data) {
+    return { type: GET_RECORD_BY_ID_SUCCESS, payload: data };
+  }
+  function failure(err) {
+    return { type: GET_RECORD_BY_ID_FAILURE, payload: err };
   }
 };
 

@@ -9,3 +9,9 @@
 .clickable {
   cursor: pointer;
 }
+/* LOading indicator */
+.loading-container {
+  position: absolute;
+  top: 40%;
+  left: 42%;
+}

@@ -170,7 +170,7 @@ class RecordDetails extends Component {
               </strong>
               <WhiteSpace size='lg' />
             </div>
-            <div className='map-container'>
+            <div className='record-map-container'>
               <GoogleMapReact
                 bootstrapURLKeys={{
                   key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,

@@ -14,6 +14,9 @@ import {
   DELETE_RECORD_BY_ID_REQUEST,
   DELETE_RECORD_BY_ID_SUCCESS,
   DELETE_RECORD_BY_ID_FAILURE,
+  UPDATE_RECORD_BY_ID_REQUEST,
+  UPDATE_RECORD_BY_ID_SUCCESS,
+  UPDATE_RECORD_BY_ID_FAILURE,
 } from '../constants/index';
 
 const initialState = {
@@ -22,6 +25,7 @@ const initialState = {
   recordsActions: {
     isAdding: false,
     isDeleting: false,
+    isUpdating: false,
     isFetching: false,
     error: null,
     message: null,
@@ -135,6 +139,31 @@ const records = (state = initialState, action) => {
           ...state.recordsActions,
           error: payload,
           isDeleting: false,
+        },
+      };
+    case UPDATE_RECORD_BY_ID_REQUEST:
+      return {
+        ...state,
+        recordsActions: {
+          ...state.recordsActions,
+          isUpdating: true,
+        },
+      };
+    case UPDATE_RECORD_BY_ID_SUCCESS:
+      return {
+        ...state,
+        recordsActions: {
+          ...state.recordsActions,
+          isUpdating: false,
+        },
+      };
+    case UPDATE_RECORD_BY_ID_FAILURE:
+      return {
+        ...state,
+        recordsActions: {
+          ...state.recordsActions,
+          error: payload,
+          isUpdating: false,
         },
       };
     default:

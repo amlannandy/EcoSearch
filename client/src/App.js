@@ -15,6 +15,7 @@ import UserRecords from './components/records/index';
 import UpdateInfo from './components/menu/updateInfo';
 import AddRecord from './components/records/addRecord';
 import UploadImage from './components/menu/uploadImage';
+import EditRecord from './components/records/editRecord';
 import DeleteAccount from './components/menu/deleteAccount';
 import ResetPassword from './components/auth/resetPassword';
 import ForgotPassword from './components/auth/forgotPassword';
@@ -33,6 +34,7 @@ class App extends Component {
           <BrowserRouter>
             <Switch>
               <PrivateRoute path='/add-record' component={AddRecord} />
+              <PrivateRoute path='/edit-record/:id' component={EditRecord} />
               <PrivateRoute path='/records/:id' component={RecordDetails} />
               <PrivateRoute path='/records' component={UserRecords} />
               <PrivateRoute

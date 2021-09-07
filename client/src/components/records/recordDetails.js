@@ -45,10 +45,16 @@ class RecordDetails extends Component {
   handleVisibleChange = visible => this.setState({ visible });
 
   onSelect = opt => {
+    const {
+      history,
+      match: {
+        params: { id },
+      },
+    } = this.props;
     const key = parseInt(opt.key);
     switch (key) {
       case 0:
-        console.log('Edit');
+        history.push(`/edit-record/${id}`);
         break;
       case 1:
         this.handleDeleteRecord();

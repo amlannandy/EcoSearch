@@ -15,6 +15,9 @@ import {
   DELETE_RECORD_BY_ID_REQUEST,
   DELETE_RECORD_BY_ID_SUCCESS,
   DELETE_RECORD_BY_ID_FAILURE,
+  UPDATE_RECORD_BY_ID_REQUEST,
+  UPDATE_RECORD_BY_ID_SUCCESS,
+  UPDATE_RECORD_BY_ID_FAILURE,
 } from '../constants/index';
 
 export const fetchAllRecords = () => {
@@ -137,6 +140,32 @@ export const deleteRecordById = (id, successCallback, errorCallback) => {
   }
   function failure(err) {
     return { type: DELETE_RECORD_BY_ID_FAILURE, payload: err };
+  }
+};
+
+export const updateRecordById = (id, data, successCallback, errorCallback) => {
+  return dispatch => {
+    dispatch(request());
+    axios
+      .put(`/records/${id}`, data)
+      .then(() => {
+        dispatch(success());
+        successCallback();
+      })
+      .catch(err => {
+        const errorMessage = getErrorFromResponse(err);
+        dispatch(failure(errorMessage));
+        errorCallback(errorMessage);
+      });
+  };
+  function request() {
+    return { type: UPDATE_RECORD_BY_ID_REQUEST };
+  }
+  function success() {
+    return { type: UPDATE_RECORD_BY_ID_SUCCESS };
+  }
+  function failure(err) {
+    return { type: UPDATE_RECORD_BY_ID_FAILURE, payload: err };
   }
 };
 

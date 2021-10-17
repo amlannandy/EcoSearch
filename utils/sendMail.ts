@@ -1,7 +1,7 @@
-const nodemailer = require('nodemailer');
-const sendInBlue = require('nodemailer-sendinblue-transport');
+import nodemailer from "nodemailer";
+import sendInBlue from "nodemailer-sendinblue-transport";
 
-exports.sendPasswordResetmail = async (email, token) => {
+export const sendPasswordResetmail = async (email: string, token: string) => {
   const transporter = nodemailer.createTransport(
     sendInBlue({
       apiKey: process.env.V2_API_KEY,
@@ -10,9 +10,8 @@ exports.sendPasswordResetmail = async (email, token) => {
   const url = `${process.env.API_URL}/reset-password/${token}`;
   await transporter.sendMail({
     to: email,
-    fromName: 'FloraSearch',
-    from: 'noreply@florasearch.com',
-    subject: 'Reset your FloraSearch account password',
+    from: "noreply@florasearch.com",
+    subject: "Reset your FloraSearch account password",
     text: `Please click on this url to reset your password.\n${url}\nIf you didn't request this, then you can ignore this email.`,
   });
 };

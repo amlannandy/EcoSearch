@@ -1,16 +1,16 @@
-const cors = require('cors');
-const dotenv = require('dotenv');
-const morgan = require('morgan');
-const colors = require('colors');
-const helmet = require('helmet');
-const express = require('express');
+import cors from "cors";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import colors from "colors";
+import helmet from "helmet";
+import express from "express";
 
 // Load environment variables
 dotenv.config();
 
-const { connectToDatabase } = require('./db');
-const { createTables } = require('./models/index');
-const errorHandler = require('./middleware/errorHandler');
+import { connectToDatabase } from "./db";
+import { createTables } from "./models/index";
+import errorHandler from "./middleware/errorHandler";
 
 // Init database
 connectToDatabase();
@@ -31,26 +31,26 @@ app.use(cors());
 app.use(express.json());
 
 // Dev logging middleware
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 
 // const routes
-const auth = require('./routes/auth');
-const records = require('./routes/records');
+import auth from "./routes/auth";
+import records from "./routes/records";
 
 // Assign routes
-app.use('/api/v1/auth', auth);
-app.use('/api/v1/records', records);
+app.use("/api/v1/auth", auth);
+app.use("/api/v1/records", records);
 
 //Error handling middleware
 app.use(errorHandler);
 
 // Handle 404 cases
-app.use('*', (req, res) => {
+app.use("*", (req, res) => {
   return res.status(404).json({
     success: false,
-    errors: ['This route does not exist'],
+    errors: ["This route does not exist"],
   });
 });
 

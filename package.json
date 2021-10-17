@@ -4,9 +4,9 @@
   "description": "A Flower Classification Platform",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon index.ts",
+    "server": "ts-node-dev --files index.ts",
     "client": "cd client && npm start",
-    "dev": "concurrently \"nodemon index.ts\" \"cd client && npm start\""
+    "dev": "concurrently \"ts-node-dev --files index.ts\" \"cd client && npm start\""
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
     "@types/nodemailer": "^6.4.4",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
-    "ts-node": "^10.3.0",
+    "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.4"
   },
   "dependencies": {

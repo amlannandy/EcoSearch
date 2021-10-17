@@ -9,6 +9,8 @@ const User = sequelize.define<IUserInstance>(
   {
     id: {
       primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
       type: DataTypes.INTEGER,
     },
     name: {

@@ -5,6 +5,8 @@ import { sequelize } from "../db";
 const Record = sequelize.define<IUserInstance>("record", {
   id: {
     primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
     type: DataTypes.INTEGER,
   },
   title: {

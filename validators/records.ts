@@ -8,6 +8,7 @@ export const validateCreateRecord = [
     .not()
     .isEmpty()
     .withMessage("Please provide a description"),
+  check("label").trim().not().isEmpty().withMessage("Please provide a label"),
   check("imageUrl").trim().not().isEmpty().withMessage("Error uploading image"),
   check("latitude")
     .trim()

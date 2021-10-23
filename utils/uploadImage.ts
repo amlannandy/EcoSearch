@@ -16,7 +16,7 @@ const getUri = (file: any) =>
 
 const uploadImage = async (file: any) => {
   const imageUri = getUri(file);
-  if (imageUri) {
+  if (!imageUri) {
     return null;
   }
   const res = await cloudinary.uploader.upload((imageUri as any).content);

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
+import Model from "../models/model";
 import Record from "../interfaces/Record";
 import uploadImage from "../utils/uploadImage";
 import ErrorResponse from "../interfaces/ErrorResponse";
@@ -38,7 +39,8 @@ export const getAllRecords = asyncHandler(
 export const createRecord = asyncHandler(
   async (req: Request, res: Response) => {
     const userId = req.user.id;
-    const { title, description, latitude, longitude, imageUrl } = req.body;
+    const { title, description, latitude, longitude, imageUrl, label } =
+      req.body;
 
     await Record.create({
       title,
@@ -47,6 +49,7 @@ export const createRecord = asyncHandler(
       imageUrl,
       latitude,
       longitude,
+      label,
     });
     res.status(200).json({
       success: true,
@@ -68,11 +71,21 @@ export const uploadRecordImage = asyncHandler(
     if (!file.mimetype.startsWith("image")) {
       return next(new ErrorResponse("Please upload an image", 400));
     }
+    let label;
+    const predictions = await Model.classify(file.buffer);
+    if (!predictions || predictions.length === 0) {
+      label = "Unkown";
+    } else {
+      label = predictions[0].className;
+    }
     const imageUrl = await uploadImage(file);
     res.status(200).json({
       success: true,
       msg: "Image uploaded",
-      data: imageUrl,
+      data: {
+        imageUrl,
+        label,
+      },
     });
   }
 );

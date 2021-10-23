@@ -40,7 +40,7 @@ interface IRecordModel {
   title: string;
   description: string;
   imageUrl: string;
-  label?: string;
+  label: string;
   latitude: number;
   longitude: number;
   createdAt?: Date;

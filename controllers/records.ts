@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
-import Record from "../models/Record";
+import Record from "../interfaces/Record";
 import uploadImage from "../utils/uploadImage";
-import ErrorResponse from "../models/ErrorResponse";
+import ErrorResponse from "../interfaces/ErrorResponse";
 import asyncHandler from "../middleware/asyncHandler";
 
 // @description   Get all user records

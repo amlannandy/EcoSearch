@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
-import User from "../models/User";
+import User from "../interfaces/User";
 import uploadImage from "../utils/uploadImage";
-import RevokedToken from "../models/RevokedToken";
-import ErrorResponse from "../models/ErrorResponse";
+import RevokedToken from "../interfaces/RevokedToken";
+import ErrorResponse from "../interfaces/ErrorResponse";
 import asyncHandler from "../middleware/asyncHandler";
 import { sendPasswordResetmail } from "../utils/sendMail";
 

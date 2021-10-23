@@ -9,7 +9,7 @@ import express from "express";
 dotenv.config();
 
 import { connectToDatabase } from "./db";
-import { createTables } from "./models/index";
+import { createTables } from "./interfaces/index";
 import errorHandler from "./middleware/errorHandler";
 
 // Init database

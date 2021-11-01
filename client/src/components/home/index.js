@@ -1,19 +1,19 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
-import GoogleMap from 'google-map-react';
-import { NavBar } from 'antd-mobile';
-import { FaBars, FaMapPin } from 'react-icons/fa';
+import { connect } from "react-redux";
+import React, { Component } from "react";
+import GoogleMap from "google-map-react";
+import { NavBar } from "antd-mobile";
+import { FaBars, FaMapPin } from "react-icons/fa";
 
-import './css/index.css';
-import LandingCard from './landingCard';
-import { fetchAllRecords } from '../../actions/index';
+import "./css/index.css";
+import LandingCard from "./landingCard";
+import { fetchAllRecords } from "../../actions/index";
 
 const defaultProps = {
   center: {
-    lat: 34,
-    lng: 45,
+    lat: 20.3,
+    lng: 85.8,
   },
-  zoom: 11,
+  zoom: 12,
 };
 
 class Index extends Component {
@@ -51,7 +51,7 @@ class Index extends Component {
             authActions.isAuthenticated ? (
               <FaBars
                 className='clickable'
-                onClick={() => history.push('/menu')}
+                onClick={() => history.push("/menu")}
               />
             ) : null
           }>

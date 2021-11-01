@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import App from './app';
-import 'antd-mobile/dist/antd-mobile.css';
+import App from "./App";
+import "antd-mobile/dist/antd-mobile.css";
 
 ReactDOM.render(
   <React.Fragment>
     <App />
   </React.Fragment>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

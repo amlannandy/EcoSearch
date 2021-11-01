@@ -1,4 +1,4 @@
-import axios from '../utils/axios';
+import axios from "../utils/axios";
 import {
   ADD_RECORD_REQUEST,
   ADD_RECORD_SUCCESS,
@@ -18,13 +18,13 @@ import {
   UPDATE_RECORD_BY_ID_REQUEST,
   UPDATE_RECORD_BY_ID_SUCCESS,
   UPDATE_RECORD_BY_ID_FAILURE,
-} from '../constants/index';
+} from "../constants/index";
 
 export const fetchAllRecords = () => {
   return dispatch => {
     dispatch(request());
     axios
-      .get('/records/explore')
+      .get("/records/explore")
       .then(res => dispatch(success(res.data.data)))
       .catch(err => dispatch(failure(getErrorFromResponse(err))));
   };
@@ -43,7 +43,7 @@ export const fetchUserRecords = () => {
   return dispatch => {
     dispatch(request());
     axios
-      .get('/records')
+      .get("/records")
       .then(res => dispatch(success(res.data.data)))
       .catch(err => dispatch(failure(getErrorFromResponse(err))));
   };
@@ -62,15 +62,15 @@ export const addRecord = (data, successCallback, errorCallback) => {
   return dispatch => {
     dispatch(request());
     let formData = new FormData();
-    formData.append('file', data.image);
+    formData.append("file", data.image);
     axios
-      .post('/records/upload-image', formData)
+      .post("/records/upload-image", formData)
       .then(res => {
-        const imageUrl = res.data.data;
-        let postData = { ...data, imageUrl };
+        const { imageUrl, label } = res.data.data;
+        let postData = { ...data, imageUrl, label };
         delete postData.image;
         axios
-          .post('/records/create', postData)
+          .post("/records/create", postData)
           .then(() => {
             dispatch(success());
             successCallback();
@@ -170,7 +170,7 @@ export const updateRecordById = (id, data, successCallback, errorCallback) => {
 };
 
 const getErrorFromResponse = err => {
-  let error = 'Something went wrong!';
+  let error = "Something went wrong!";
   const errors = err.response.data.errors;
   if (errors) {
     error = errors[0];

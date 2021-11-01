@@ -1,10 +1,10 @@
-import { Card } from 'antd-mobile';
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
-import { FaUserPlus, FaCamera } from 'react-icons/fa';
+import { Card } from "antd-mobile";
+import { connect } from "react-redux";
+import React, { Component } from "react";
+import { FaUserPlus, FaCamera } from "react-icons/fa";
 
-import './css/landingCard.css';
-import Logo from '../../static/logo.png';
+import "./css/landingCard.css";
+import Logo from "../../static/logo.png";
 
 class LandingCard extends Component {
   render() {
@@ -30,7 +30,7 @@ class LandingCard extends Component {
                 </div>
               ) : (
                 <div className='inner-text'>
-                  <p>Welcome to FloraSearch</p>
+                  <p>Welcome to EcoSearch</p>
                   <small>Login to upload your pictures</small>
                 </div>
               )}
@@ -39,13 +39,13 @@ class LandingCard extends Component {
                   <FaCamera
                     className='gray-icon'
                     size={40}
-                    onClick={() => history.push('/records')}
+                    onClick={() => history.push("/records")}
                   />
                 ) : (
                   <FaUserPlus
                     className='gray-icon'
                     size={40}
-                    onClick={() => history.push('/auth')}
+                    onClick={() => history.push("/auth")}
                   />
                 )}
               </div>

@@ -1,16 +1,16 @@
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import React, { Component } from "react";
 
-import './css/index.css';
-import { login } from '../../actions/index';
-import { isEmail } from '../../utils/helpers';
-import { WingBlank, InputItem, Button, WhiteSpace, Toast } from 'antd-mobile';
+import "./css/index.css";
+import { login } from "../../actions/index";
+import { isEmail } from "../../utils/helpers";
+import { WingBlank, InputItem, Button, WhiteSpace, Toast } from "antd-mobile";
 
 class Login extends Component {
   state = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     errors: {
       emailError: null,
       passwordError: null,
@@ -27,10 +27,10 @@ class Login extends Component {
       passwordError = null,
       isFormValid = false;
     if (!isEmail(email)) {
-      emailError = 'Please enter a valid email';
+      emailError = "Please enter a valid email";
     }
     if (password.trim().length < 6) {
-      passwordError = 'Please provide a valid password';
+      passwordError = "Please provide a valid password";
     }
     if (!emailError && !passwordError) {
       isFormValid = true;
@@ -59,7 +59,7 @@ class Login extends Component {
         <WhiteSpace size='lg' />
         <div className='header'>
           <h1>Login</h1>
-          <p>To start uploading your flowers</p>
+          <p>To start uploading your photos</p>
         </div>
         <WhiteSpace size='lg' />
         <InputItem

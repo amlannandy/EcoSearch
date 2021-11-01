@@ -1,18 +1,18 @@
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import React, { Component } from "react";
 
-import './css/index.css';
-import { isEmail } from '../../utils/helpers';
-import { register } from '../../actions/index';
-import { WingBlank, InputItem, Button, WhiteSpace, Toast } from 'antd-mobile';
+import "./css/index.css";
+import { isEmail } from "../../utils/helpers";
+import { register } from "../../actions/index";
+import { WingBlank, InputItem, Button, WhiteSpace, Toast } from "antd-mobile";
 
 class Register extends Component {
   state = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
     errors: {
       nameError: null,
       emailError: null,
@@ -33,16 +33,16 @@ class Register extends Component {
       confirmPasswordError = null,
       isFormValid = false;
     if (name.trim().length === 0) {
-      nameError = 'Please enter your name';
+      nameError = "Please enter your name";
     }
     if (!isEmail(email)) {
-      emailError = 'Please enter a valid email';
+      emailError = "Please enter a valid email";
     }
     if (password.trim().length < 6) {
-      passwordError = 'Please provide a valid password';
+      passwordError = "Please provide a valid password";
     }
     if (password.trim() !== confirmPassword.trim()) {
-      confirmPasswordError = 'Passwords do not match';
+      confirmPasswordError = "Passwords do not match";
     }
     if (!nameError && !emailError && !passwordError && !confirmPasswordError) {
       isFormValid = true;
@@ -80,7 +80,7 @@ class Register extends Component {
         <WhiteSpace size='lg' />
         <div className='header'>
           <h1>Register</h1>
-          <p>To join this community of flower enthusiasts</p>
+          <p>To join this community of wildlife enthusiasts</p>
         </div>
         <WhiteSpace size='lg' />
         <InputItem

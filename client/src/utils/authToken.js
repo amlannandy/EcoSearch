@@ -1,4 +1,4 @@
-const TOKEN_STORAGE = 'florasearch-token';
+const TOKEN_STORAGE = "ecosearch-token";
 
 export const saveTokenToLocalStorage = token => {
   localStorage.setItem(TOKEN_STORAGE, token);

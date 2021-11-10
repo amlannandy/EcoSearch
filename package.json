@@ -1,5 +1,5 @@
 {
-  "name": "florasearch",
+  "name": "ecosearch",
   "version": "1.0.0",
   "description": "A Flower Classification Platform",
   "main": "server.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amlannandy/FloraSearch.git"
+    "url": "git+https://github.com/amlannandy/EcoSearch.git"
   },
   "author": "Amlan Kumar Nandy",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/amlannandy/FloraSearch/issues"
+    "url": "https://github.com/amlannandy/EcoSearch/issues"
   },
-  "homepage": "https://github.com/amlannandy/FloraSearch#readme",
+  "homepage": "https://github.com/amlannandy/EcoSearch#readme",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",

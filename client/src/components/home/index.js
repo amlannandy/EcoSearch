@@ -55,7 +55,7 @@ class Index extends Component {
               />
             ) : null
           }>
-          FloraSearch
+          EcoSearch
         </NavBar>
         <LandingCard history={history} />
       </div>

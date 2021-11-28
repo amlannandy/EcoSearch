@@ -33,6 +33,10 @@ const Record = sequelize.define<IUserInstance>("record", {
     type: DataTypes.DOUBLE,
     allowNull: false,
   },
+  isVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 interface IRecordModel {
@@ -45,6 +49,7 @@ interface IRecordModel {
   longitude: number;
   createdAt?: Date;
   userId?: number;
+  isVerified?: boolean;
 }
 
 interface IRecordAttributes extends Optional<IRecordModel, "id"> {}

@@ -38,9 +38,11 @@ if (process.env.NODE_ENV === "development") {
 // const routes
 import auth from "./routes/auth";
 import records from "./routes/records";
+import admin from "./routes/admin";
 
 // Assign routes
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/admin", admin);
 app.use("/api/v1/records", records);
 
 //Error handling middleware

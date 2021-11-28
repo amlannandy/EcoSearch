@@ -37,11 +37,13 @@ if (process.env.NODE_ENV === "development") {
 
 // const routes
 import auth from "./routes/auth";
-import records from "./routes/records";
+import stats from "./routes/stats";
 import admin from "./routes/admin";
+import records from "./routes/records";
 
 // Assign routes
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/stats", stats);
 app.use("/api/v1/admin", admin);
 app.use("/api/v1/records", records);
 

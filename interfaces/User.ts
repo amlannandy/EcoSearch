@@ -31,6 +31,14 @@ const User = sequelize.define<IUserInstance>(
       type: DataTypes.STRING,
       defaultValue: process.env.AVATAR_IMAGE_URL,
     },
+    type: {
+      type: DataTypes.ENUM({ values: ["user", "researcher", "admin"] }),
+      defaultValue: "user",
+    },
+    isVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     createdAt: {
       type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW,
@@ -78,6 +86,8 @@ interface IUserModel {
   email: string;
   password: string;
   imageUrl?: string;
+  isVerified?: boolean;
+  type?: "user" | "researcher" | "admin";
   createdAt?: Date;
 }
 

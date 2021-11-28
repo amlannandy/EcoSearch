@@ -41,7 +41,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 // @route         POST /api/v1/auth/register
 // @access        Public
 export const register = asyncHandler(async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, type = "user" } = req.body;
   const existingUser = await User.findOne({ where: { email } });
   if (existingUser) {
     return res.status(409).json({
@@ -49,7 +49,13 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
       errors: ["Account with this email already exists"],
     });
   }
-  const user = await User.create({ name, email, password });
+  const user = await User.create({
+    name,
+    email,
+    password,
+    type,
+    isVerified: type === "user",
+  });
   const token = user.authToken;
   res.status(200).json({
     success: true,

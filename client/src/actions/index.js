@@ -1,2 +1,3 @@
-export * from './auth';
-export * from './records';
+export * from "./auth";
+export * from "./admin";
+export * from "./records";

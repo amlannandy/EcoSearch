@@ -1,11 +1,19 @@
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import React, { Component } from "react";
+import {
+  WingBlank,
+  InputItem,
+  Button,
+  WhiteSpace,
+  Toast,
+  List,
+  Radio,
+} from "antd-mobile";
 
 import "./css/index.css";
 import { isEmail } from "../../utils/helpers";
 import { register } from "../../actions/index";
-import { WingBlank, InputItem, Button, WhiteSpace, Toast } from "antd-mobile";
 
 class Register extends Component {
   state = {
@@ -13,6 +21,7 @@ class Register extends Component {
     email: "",
     password: "",
     confirmPassword: "",
+    type: "user",
     errors: {
       nameError: null,
       emailError: null,
@@ -21,6 +30,13 @@ class Register extends Component {
       isFormValid: false,
     },
   };
+
+  data = [
+    { value: "user", label: "User" },
+    { value: "researcher", label: "Researcher" },
+  ];
+
+  onChangeRadio = value => {};
 
   handleChange = e =>
     this.setState({ [e.target.name]: e.target.value }, this.validateForm);
@@ -60,8 +76,8 @@ class Register extends Component {
 
   handleRegister = () => {
     const { register } = this.props;
-    const { name, email, password } = this.state;
-    const postData = { name, email, password };
+    const { name, email, password, type } = this.state;
+    const postData = { name, email, password, type };
     register(postData, this.errorCallback);
   };
 
@@ -121,6 +137,17 @@ class Register extends Component {
           onChangeCapture={this.handleChange}
           disabled={authActions.isAuthenticating}
         />
+        <WhiteSpace size='md' />
+        <List renderHeader={() => "I am -"}>
+          {this.data.map(i => (
+            <Radio.RadioItem
+              key={i.value}
+              checked={this.state.type === i.value}
+              onChange={() => this.setState({ type: i.value })}>
+              {i.label}
+            </Radio.RadioItem>
+          ))}
+        </List>
         <WhiteSpace size='md' />
         <Button
           type='primary'

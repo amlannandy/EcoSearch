@@ -8,7 +8,6 @@ import asyncHandler from "../middleware/asyncHandler";
 // @access        Public
 export const getSpeciesinRadius = asyncHandler(
   async (req: Request, res: Response) => {
-    const { latitude, longitude } = req.body;
     const filteredRecords = await Record.count({
       attributes: ["label"],
       group: ["label"],

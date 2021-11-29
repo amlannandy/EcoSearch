@@ -1,7 +1,7 @@
 import { Card } from "antd-mobile";
 import { connect } from "react-redux";
 import React, { Component } from "react";
-import { FaUserPlus, FaCamera, FaUsers } from "react-icons/fa";
+import { FaUserPlus, FaCamera, FaUsers, FaDatabase } from "react-icons/fa";
 
 import "./css/landingCard.css";
 import Logo from "../../static/logo.png";
@@ -29,6 +29,11 @@ class LandingCard extends Component {
                     <p>Admin Panel</p>
                     <small>Manage your resources</small>
                   </div>
+                ) : user.type === "researcher" ? (
+                  <div className='inner-text'>
+                    <p>Hello, {user.name}</p>
+                    <small>Analyze wildlife data</small>
+                  </div>
                 ) : (
                   <div className='inner-text'>
                     <p>Hello, {user.name}</p>
@@ -48,6 +53,12 @@ class LandingCard extends Component {
                       className='gray-icon'
                       size={40}
                       onClick={() => history.push("/admin")}
+                    />
+                  ) : user.type === "researcher" ? (
+                    <FaDatabase
+                      className='gray-icon'
+                      size={40}
+                      onClick={() => history.push("/stats")}
                     />
                   ) : (
                     <FaCamera

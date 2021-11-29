@@ -11,6 +11,7 @@ import PrivateRoute from "./utils/privateRoute";
 import Home from "./components/home/index";
 import Auth from "./components/auth/index";
 import Menu from "./components/menu/index";
+import Stats from "./components/stats/index";
 import Admin from "./components/admin/index";
 import UserRecords from "./components/records/index";
 import UpdateInfo from "./components/menu/updateInfo";
@@ -50,6 +51,7 @@ class App extends Component {
                 path='/reset-password/:token'
                 component={ResetPassword}
               />
+              <PrivateRoute path='/stats' component={Stats} />
               <PrivateRoute path='/menu' component={Menu} />
               <GuestRoute path='/auth' component={Auth} />
               <PrivateRoute path='/admin' component={Admin} />

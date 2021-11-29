@@ -1,0 +1,49 @@
+.recordModal {
+  position: relative;
+  width: 100vw;
+  padding: 10px;
+  height: auto;
+  background: white;
+  border-radius: 5px 5px 0px 0px;
+  display: flex;
+}
+
+.modalContainer {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-end;
+}
+
+@media (min-width: 768px) {
+  .modalContainer {
+    align-items: center;
+    justify-content: center;
+  }
+  .recordModal {
+    width: 450px;
+  }
+}
+
+.recordImage {
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.content {
+  padding-left: 10px;
+}
+
+.recordButton {
+  padding: 5px 15px;
+  background-color: #eee;
+  border: none;
+  border-radius: 5px;
+}

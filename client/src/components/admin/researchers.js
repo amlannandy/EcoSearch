@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card } from "antd-mobile";
+import { Card, ActivityIndicator } from "antd-mobile";
 import { useSelector, useDispatch } from "react-redux";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
@@ -16,6 +16,14 @@ function Researchers() {
   useEffect(() => {
     dispatch(getResearchers());
   }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <div className='loading-container'>
+        <ActivityIndicator text='Loading...' size='large' />
+      </div>
+    );
+  }
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { Card } from "antd-mobile";
+import { Card, ActivityIndicator } from "antd-mobile";
 
 import "./css/records.css";
 import { getRecords } from "../../actions/index";
@@ -16,6 +16,14 @@ function Records() {
   useEffect(() => {
     dispatch(getRecords());
   }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <div className='loading-container'>
+        <ActivityIndicator text='Loading...' size='large' />
+      </div>
+    );
+  }
 
   return (
     <>

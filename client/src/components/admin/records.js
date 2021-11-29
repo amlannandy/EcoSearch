@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, ActivityIndicator } from "antd-mobile";
+import { Card, ActivityIndicator, Toast } from "antd-mobile";
 
 import "./css/records.css";
-import { getRecords } from "../../actions/index";
+import { getRecords, verifyRecord, blockRecord } from "../../actions/index";
 
 function Records() {
   const dispatch = useDispatch();
@@ -16,6 +16,24 @@ function Records() {
   useEffect(() => {
     dispatch(getRecords());
   }, [dispatch]);
+
+  function handleVerifyRecord(id) {
+    dispatch(verifyRecord(id, successCallback, errorCallback));
+  }
+
+  function handleBlockRecord(id) {
+    dispatch(blockRecord(id, successCallback, errorCallback));
+  }
+
+  function successCallback(msg) {
+    Toast.success(msg);
+    dispatch(getRecords());
+  }
+
+  function errorCallback(err) {
+    Toast.fail(err);
+    dispatch(getRecords());
+  }
 
   if (isLoading) {
     return (
@@ -36,8 +54,16 @@ function Records() {
               <p className='label'>{record.label}</p>
             </div>
             <div className='buttonsRow'>
-              <FaCheckCircle className='successIcon' size={35} />
-              <FaTimesCircle className='failureIcon' size={35} />
+              <FaCheckCircle
+                className='successIcon'
+                size={35}
+                onClick={() => handleVerifyRecord(record.id)}
+              />
+              <FaTimesCircle
+                className='failureIcon'
+                size={35}
+                onClick={() => handleBlockRecord(record.id)}
+              />
             </div>
           </div>
         </Card>

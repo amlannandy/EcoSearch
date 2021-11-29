@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
-import { Card, ActivityIndicator } from "antd-mobile";
+import { Card, ActivityIndicator, Toast } from "antd-mobile";
 import { useSelector, useDispatch } from "react-redux";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 import "./css/researchers.css";
-import { getResearchers } from "../../actions/index";
+import {
+  getResearchers,
+  verifyResearcher,
+  blockResearcher,
+} from "../../actions/index";
 
 function Researchers() {
   const dispatch = useDispatch();
@@ -16,6 +20,24 @@ function Researchers() {
   useEffect(() => {
     dispatch(getResearchers());
   }, [dispatch]);
+
+  function handleVerifyResearcher(id) {
+    dispatch(verifyResearcher(id, successCallback, errorCallback));
+  }
+
+  function handleBlockResearcher(id) {
+    dispatch(blockResearcher(id, successCallback, errorCallback));
+  }
+
+  function successCallback(msg) {
+    Toast.success(msg);
+    dispatch(getResearchers());
+  }
+
+  function errorCallback(err) {
+    Toast.fail(err);
+    dispatch(getResearchers());
+  }
 
   if (isLoading) {
     return (
@@ -37,8 +59,16 @@ function Researchers() {
                 <p>{user.email}</p>
               </div>
               <div className='buttonsRow'>
-                <FaCheckCircle className='successIcon' size={35} />
-                <FaTimesCircle className='failureIcon' size={35} />
+                <FaCheckCircle
+                  className='successIcon'
+                  size={35}
+                  onClick={() => handleVerifyResearcher(user.id)}
+                />
+                <FaTimesCircle
+                  className='failureIcon'
+                  size={35}
+                  onClick={() => handleBlockResearcher(user.id)}
+                />
               </div>
             </div>
           </div>

@@ -27,10 +27,10 @@ It is a Progressive Web Applicatio (PWA) built using the following technologies 
 It provides the following functionalities -
 
 - Authentication via `email-password` or `google-sign-in`
-- View flowers and their diversity in your neighbourhood
-- Upload the picture of a flower and run it against the classification model
+- View various wildlife and their diversity in an area
+- Upload the picture of a wildlife species and run it against the classification model
 - Save the labelled pictures to your profile
-- Use object path tracking to view path of a particular flower species
+- Use object path tracking to view path of a particular wildlife species
 
 ## Screenshots
 

@@ -1,7 +1,7 @@
 {
   "name": "ecosearch",
   "version": "1.0.0",
-  "description": "A Flower Classification Platform",
+  "description": "A Wildlife Classification Platform",
   "main": "server.js",
   "scripts": {
     "server": "ts-node-dev --files index.ts",

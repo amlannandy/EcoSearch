@@ -26,7 +26,7 @@ class LandingCard extends Component {
               {authActions.isAuthenticated && user ? (
                 <div className='inner-text'>
                   <p>Hello, {user.name}</p>
-                  <small>Upload a flower picture now!</small>
+                  <small>Upload a wildlife picture now!</small>
                 </div>
               ) : (
                 <div className='inner-text'>

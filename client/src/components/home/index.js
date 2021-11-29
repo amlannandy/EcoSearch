@@ -6,6 +6,7 @@ import { FaBars, FaMapPin } from "react-icons/fa";
 
 import "./css/index.css";
 import LandingCard from "./landingCard";
+import RecordModal from "./recordModal";
 import { fetchAllRecords } from "../../actions/index";
 
 const defaultProps = {
@@ -17,10 +18,19 @@ const defaultProps = {
 };
 
 class Index extends Component {
+  state = {
+    record: null,
+    isRecordModalOpen: false,
+  };
+
   componentDidMount() {
     const { fetchAllRecords } = this.props;
     fetchAllRecords();
   }
+
+  mapPinOnClick = record => {
+    this.setState({ record, isRecordModalOpen: true });
+  };
 
   render() {
     const {
@@ -42,6 +52,7 @@ class Index extends Component {
               lat={record.latitude}
               lng={record.longitude}
               text={record.title}
+              onClick={() => this.mapPinOnClick(record)}
             />
           ))}
         </GoogleMap>
@@ -58,6 +69,13 @@ class Index extends Component {
           EcoSearch
         </NavBar>
         <LandingCard history={history} />
+        <RecordModal
+          record={this.state.record}
+          active={this.state.isRecordModalOpen}
+          closeModal={() =>
+            this.setState({ isRecordModalOpen: false, record: null })
+          }
+        />
       </div>
     );
   }

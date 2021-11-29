@@ -1,26 +1,27 @@
-import { Provider } from 'react-redux';
-import React, { Component, Fragment } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Provider } from "react-redux";
+import React, { Component, Fragment } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import './app.css';
-import store from './utils/store';
-import { loadUser } from './actions/index';
-import GuestRoute from './utils/guestRoute';
-import PrivateRoute from './utils/privateRoute';
+import "./app.css";
+import store from "./utils/store";
+import { loadUser } from "./actions/index";
+import GuestRoute from "./utils/guestRoute";
+import PrivateRoute from "./utils/privateRoute";
 
-import Home from './components/home/index';
-import Auth from './components/auth/index';
-import Menu from './components/menu/index';
-import UserRecords from './components/records/index';
-import UpdateInfo from './components/menu/updateInfo';
-import AddRecord from './components/records/addRecord';
-import UploadImage from './components/menu/uploadImage';
-import EditRecord from './components/records/editRecord';
-import DeleteAccount from './components/menu/deleteAccount';
-import ResetPassword from './components/auth/resetPassword';
-import ForgotPassword from './components/auth/forgotPassword';
-import UpdatePassword from './components/menu/updatePassword';
-import RecordDetails from './components/records/recordDetails';
+import Home from "./components/home/index";
+import Auth from "./components/auth/index";
+import Menu from "./components/menu/index";
+import Admin from "./components/admin/index";
+import UserRecords from "./components/records/index";
+import UpdateInfo from "./components/menu/updateInfo";
+import AddRecord from "./components/records/addRecord";
+import UploadImage from "./components/menu/uploadImage";
+import EditRecord from "./components/records/editRecord";
+import DeleteAccount from "./components/menu/deleteAccount";
+import ResetPassword from "./components/auth/resetPassword";
+import ForgotPassword from "./components/auth/forgotPassword";
+import UpdatePassword from "./components/menu/updatePassword";
+import RecordDetails from "./components/records/recordDetails";
 
 class App extends Component {
   componentDidMount() {
@@ -51,6 +52,7 @@ class App extends Component {
               />
               <PrivateRoute path='/menu' component={Menu} />
               <GuestRoute path='/auth' component={Auth} />
+              <PrivateRoute path='/admin' component={Admin} />
               <Route path='/' component={Home} />
             </Switch>
           </BrowserRouter>

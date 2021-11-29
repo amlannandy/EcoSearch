@@ -1,7 +1,7 @@
 import { Card } from "antd-mobile";
 import { connect } from "react-redux";
 import React, { Component } from "react";
-import { FaUserPlus, FaCamera } from "react-icons/fa";
+import { FaUserPlus, FaCamera, FaUsers } from "react-icons/fa";
 
 import "./css/landingCard.css";
 import Logo from "../../static/logo.png";
@@ -24,10 +24,17 @@ class LandingCard extends Component {
                 <img src={Logo} alt='logo' />
               )}
               {authActions.isAuthenticated && user ? (
-                <div className='inner-text'>
-                  <p>Hello, {user.name}</p>
-                  <small>Upload a wildlife picture now!</small>
-                </div>
+                user.type === "admin" ? (
+                  <div className='inner-text'>
+                    <p>Admin Panel</p>
+                    <small>Manage your resources</small>
+                  </div>
+                ) : (
+                  <div className='inner-text'>
+                    <p>Hello, {user.name}</p>
+                    <small>Upload a wildlife picture now!</small>
+                  </div>
+                )
               ) : (
                 <div className='inner-text'>
                   <p>Welcome to EcoSearch</p>
@@ -36,11 +43,19 @@ class LandingCard extends Component {
               )}
               <div>
                 {authActions.isAuthenticated && user ? (
-                  <FaCamera
-                    className='gray-icon'
-                    size={40}
-                    onClick={() => history.push("/records")}
-                  />
+                  user.type === "admin" ? (
+                    <FaUsers
+                      className='gray-icon'
+                      size={40}
+                      onClick={() => history.push("/admin")}
+                    />
+                  ) : (
+                    <FaCamera
+                      className='gray-icon'
+                      size={40}
+                      onClick={() => history.push("/records")}
+                    />
+                  )
                 ) : (
                   <FaUserPlus
                     className='gray-icon'
